@@ -11,6 +11,10 @@ function CategoriesPage() {
     return <p>Error: {error.message}</p>
   }
 
+  if (!data?.length) {
+    return <p>No categories found.</p>
+  }
+
 return (
     <>
       <h2>Categories Page</h2>

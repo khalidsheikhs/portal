@@ -1,6 +1,7 @@
 import type { Category } from "../types"
 
-export function getCategories(): Promise<Category[]> {
+export async function getCategories(): Promise<Category[]> {
+  console.log("Fetching categories...")
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
@@ -8,6 +9,6 @@ export function getCategories(): Promise<Category[]> {
         { id: 2, name: "Business" },
         { id: 3, name: "Sports" },
       ])
-    }, 1000)
+    }, 2500)
   })
 }

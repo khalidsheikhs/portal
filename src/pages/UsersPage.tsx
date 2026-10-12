@@ -1,4 +1,4 @@
-import { UserList } from "@/features/users"
+import { UsersList } from "@/features/users"
 import { SelectedUser } from "@/features/users"
 
 function UsersPage() {
@@ -6,7 +6,7 @@ function UsersPage() {
     <>
       <h2>Users Page</h2>
 
-      <UserList />
+      <UsersList />
       <SelectedUser />
     </>
   )

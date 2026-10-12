@@ -9,6 +9,7 @@ export async function getUsers(): Promise<User[]> {
 
   return response.json()*/
   return new Promise((resolve) => {
+    console.log("Fetching users...")
     setTimeout(() => {
       resolve([
         {
@@ -22,6 +23,6 @@ export async function getUsers(): Promise<User[]> {
           email: "sarah@example.com",
         },
       ])
-    }, 2000)
+    }, 2500)
   })
 }

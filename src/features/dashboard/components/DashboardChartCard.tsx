@@ -1,4 +1,4 @@
-import type {DashboardChartCardProps} from "../types"
+import type { DashboardChartCardProps } from "../types"
 
 export default function DashboardChartCard({
   title,

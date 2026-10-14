@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import sidebarReducer from "./slices/sidebar"
-import usersReducer from "@/features/users/usersSlice"
+import { usersReducer } from "@/features/users"
 
  const store = configureStore({
   reducer: {

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useAppSelector, useAppDispatch } from "@/app/store/hooks"
-import { fetchUsers } from "../usersSlice"
+import { fetchUsers } from "../slices"
 
 export default function useUsers() {
   const dispatch = useAppDispatch()

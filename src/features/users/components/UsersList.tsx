@@ -1,6 +1,6 @@
-import Button from "@/components/ui/Button"
+import { Button } from "@/components/index"
 import { useAppDispatch } from "@/app/store/hooks"
-import { selectUser } from "./../usersSlice"
+import { selectUser } from "../slices"
 import useUsers from "./../hooks/useUsers"
 import useSelectedUser from "./../hooks/useSelectedUser"
 

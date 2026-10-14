@@ -1,7 +1,4 @@
-import UserGrowthChart from "@/features/dashboard/components/charts/UserGrowthChart"
-import PostsPublishedChart from "@/features/dashboard/components/charts/PostsPublishedChart"
-import TrafficSourcesChart from "@/features/dashboard/components/charts/TrafficSourcesChart"
-import PageViewsChart from "@/features/dashboard/components/charts/PageViewsChart"
+import { UserGrowthChart, PostsPublishedChart, TrafficSourcesChart, PageViewsChart } from "@/features/dashboard"
 
 export default function Dashboard() {
   return (

@@ -18,10 +18,10 @@ const sidebarSlice = createSlice({
       state.sidebarCollapsed = !state.sidebarCollapsed
     },
     openMobileSidebar(state) {
-      state.mobileSidebarOpen = true;
+      state.mobileSidebarOpen = true
     },
     closeMobileSidebar(state) {
-      state.mobileSidebarOpen = false;
+      state.mobileSidebarOpen = false
     },
   },
 })

@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
+} from "recharts"
 
 const pageViewsData = [
   { month: "Jan", views: 18000 },

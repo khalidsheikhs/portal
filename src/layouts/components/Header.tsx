@@ -2,7 +2,7 @@ import { useAppDispatch } from "@/app/store/hooks"
 import { openMobileSidebar } from "@/app/store/slices/sidebar"
 
 function Header() {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   return (
     <header className="flex h-16 items-center border-b border-gray-200 bg-white px-4 sm:px-6 lg:px-8">
       {/* Mobile hamburger */}

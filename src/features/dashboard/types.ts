@@ -1,5 +1,5 @@
 export type DashboardChartCardProps = {
-  title?: string;
-  description?: string;
-  children: React.ReactNode;
+  title?: string
+  description?: string
+  children: React.ReactNode
 }

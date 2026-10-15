@@ -6,4 +6,4 @@ if (!API_BASE_URL) {
 
 export const env = {
   API_BASE_URL,
-};
+}

@@ -1,56 +1,57 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { login } from "@/features/auth/services/authService"
+// import { useState } from "react"
+import { Link } from "react-router-dom" //, useNavigate
+// import { login } from "@/features/auth/services/authService"
+import { LoginForm } from "@/features/auth"
 
 function LoginPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  /* const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    setError("");
+    setError("")
 
     if (!email.trim()) {
-      setError("Please enter your email address.");
-      return;
+      setError("Please enter your email address.")
+      return
     }
 
     if (!password) {
-      setError("Please enter your password.");
-      return;
+      setError("Please enter your password.")
+      return
     }
 
     try {
-      setIsLoading(true);
+      setIsLoading(true)
 
       const response = await login({
         email,
         password,
-      });
+      })
 
-      console.log("Login successful:", response);
+      console.log("Login successful:", response)
 
       // Temporary:
       // Later we will put authentication into Redux.
-      localStorage.setItem("token", response.accessToken);
+      localStorage.setItem("token", response.accessToken)
 
-      navigate("/dashboard");
+      // navigate("/dashboard")
     } catch (error) {
       setError(
         error instanceof Error
           ? error.message
           : "Something went wrong. Please try again."
-      );
+      )
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  }
+  } */
 
   const handleGoogleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log(event)
@@ -70,8 +71,8 @@ function LoginPage() {
       </div>
 
       {/* Login Form */}
-      <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-        {/* Email */}
+      {/*<form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        {/\* Email *\/}
         <div>
           <label
             htmlFor="email"
@@ -91,7 +92,7 @@ function LoginPage() {
           />
         </div>
 
-        {/* Password */}
+        {/\* Password *\/}
         <div>
           <div className="mb-2 flex items-center justify-between">
             <label
@@ -120,7 +121,7 @@ function LoginPage() {
           />
         </div>
 
-        {/* Remember me */}
+        {/\* Remember me *\/}
         <div className="flex items-center">
           <input
             id="remember"
@@ -137,14 +138,14 @@ function LoginPage() {
           </label>
         </div>
 
-        {/* Error */}
+        {/\* Error *\/}
         {error && (
           <p className="text-sm text-red-600">
             {error}
           </p>
         )}
 
-        {/* Login button */}
+        {/\* Login button *\/}
         <button
           type="submit"
           disabled={isLoading}
@@ -152,7 +153,8 @@ function LoginPage() {
         >
           {isLoading ? "Signing in..." : "Sign in"}
         </button>
-      </form>
+      </form> */}
+      <LoginForm />
 
       {/* Divider */}
       <div className="my-6 flex items-center">

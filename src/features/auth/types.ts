@@ -1,14 +1,17 @@
 export type LoginRequest = {
-  email: string;
-  password: string;
+  username: string
+  password: string
 }
 
 export type LoginResponse = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  accessToken: string;
-  refreshToken: string;
-  image: string;
+  user_display_name: string
+  user_nicename: string
+  user_email: string
+  token: string
+}
+
+export type User = {
+  id: number
+  name: string
+  slug: string
 }

@@ -4,6 +4,7 @@ import type { RouteObject } from "react-router-dom"
 import AdminLayout from "@/layouts/AdminLayout"
 import AuthLayout from "@/layouts/AuthLayout"
 
+import PublicRoute from "./PublicRoute"
 import LoginPage from "@/pages/auth/LoginPage"
 import RegisterPage from "@/pages/auth/RegisterPage"
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage"
@@ -18,7 +19,10 @@ import NotFoundPage from "@/pages/notFound"
 const routes: RouteObject[] = [
   // Public routes
   {
-    element: <AuthLayout />,
+    element: <PublicRoute />,
+    children: [
+      {
+        element: <AuthLayout />,
     children: [
       {
         path: "/login",
@@ -33,6 +37,8 @@ const routes: RouteObject[] = [
         element: <ForgotPasswordPage />,
       },
     ],
+  }
+]
   },
 
   // Protected routes

@@ -24,9 +24,9 @@ function Header() {
         Header UI
       </h2>
       {
-        status === "checking"
+        status === "loading"
           ? <span>Loading user...</span>
-          : (user && <p>{user.user_nicename}</p>)
+          : (user && <p>{user.name}</p>)
       }
     </header>
   )

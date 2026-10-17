@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient"
-import { token } from "./tokenStorage"
+import { tokenStorage } from "./tokenStorage"
 
 type ValidateTokenResponse = {
   code: string
@@ -9,7 +9,7 @@ type ValidateTokenResponse = {
 }
 
 export const validateToken = async (): Promise<boolean> => {
-  const savedToken = token.get()
+  const savedToken = tokenStorage.get()
 
   if (!savedToken) {
     return false
@@ -37,7 +37,7 @@ export const validateToken = async (): Promise<boolean> => {
       )
 
       if (status === 401 || status === 403) {
-        token.clear()
+        tokenStorage.clear()
         return false
       }
     }

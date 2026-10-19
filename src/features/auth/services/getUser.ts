@@ -9,8 +9,15 @@ export const getUser = async (): Promise<User> => {
     throw new Error("No token found")
   }
 
-  const response = await apiClient<User>(
-    "/wp/v2/users/me",
+  const {
+    id,
+    username,
+    name,
+    email,
+    roles,
+    capabilities,
+    } = await apiClient<User>(
+    "/wp/v2/users/me?context=edit",
     {
       method: "GET",
       headers: {
@@ -20,8 +27,11 @@ export const getUser = async (): Promise<User> => {
   )
 
   return {
-    id: response.id,
-    name: response.name,
-    slug: response.slug,
+    id,
+    username,
+    name,
+    email,
+    roles,
+    capabilities,
   }
 }

@@ -12,6 +12,9 @@ export type LoginResponse = {
 
 export type User = {
   id: number
+  username: string
   name: string
-  slug: string
+  email: string
+  roles: string[]
+  capabilities: Record<string, boolean>
 }

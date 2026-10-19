@@ -14,7 +14,7 @@ export function useLogin() {
       await login(credentials)
 
       try {
-        return getUser()
+        return await getUser()
       } catch (error) {
         tokenStorage.clear()
         throw error

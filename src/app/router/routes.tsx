@@ -16,6 +16,8 @@ import CategoriesPage from "@/pages/CategoriesPage"
 
 import NotFoundPage from "@/pages/notFound"
 
+import { RoleBasedRoute } from "@/features/access"
+
 const routes: RouteObject[] = [
   // Public routes
   {
@@ -23,22 +25,22 @@ const routes: RouteObject[] = [
     children: [
       {
         element: <AuthLayout />,
-    children: [
-      {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/register",
-        element: <RegisterPage />,
-      },
-      {
-        path: "/forgot-password",
-        element: <ForgotPasswordPage />,
-      },
-    ],
-  }
-]
+        children: [
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/register",
+            element: <RegisterPage />,
+          },
+          {
+            path: "/forgot-password",
+            element: <ForgotPasswordPage />,
+          },
+        ],
+      }
+    ]
   },
 
   // Protected routes
@@ -57,12 +59,22 @@ const routes: RouteObject[] = [
             element: <DashboardPage />,
           },
           {
-            path: "/users",
-            element: <UsersPage />,
+            element: <RoleBasedRoute page="users" />,
+            children: [
+              {
+                path: "/users",
+                element: <UsersPage />,
+              },
+            ],
           },
           {
-            path: "/categories",
-            element: <CategoriesPage />,
+            element: <RoleBasedRoute page="categories" />,
+            children: [
+              {
+                path: "/categories",
+                element: <CategoriesPage />,
+              },
+            ],
           },
         ],
       },

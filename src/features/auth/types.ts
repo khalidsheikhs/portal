@@ -1,3 +1,5 @@
+import { UserRole } from "@/features/access"
+
 export type LoginRequest = {
   username: string
   password: string
@@ -15,6 +17,6 @@ export type User = {
   username: string
   name: string
   email: string
-  roles: string[]
+  roles: UserRole[]
   capabilities: Record<string, boolean>
 }

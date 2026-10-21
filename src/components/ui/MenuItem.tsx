@@ -14,7 +14,6 @@ function MenuItem({
   onNavigate?: () => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
-
   const hasChildren = Boolean(children?.length)
 
   if (!hasChildren) {
@@ -45,31 +44,77 @@ function MenuItem({
   return (
     <div className="relative">
       {/* Parent item */}
-      <button
-        type="button"
-        onClick={() => setIsOpen((current) => !current)}
-        className="
-          flex w-full items-center justify-between
-          rounded-lg px-3 py-2
-          text-sm font-medium text-gray-700
-          hover:bg-gray-100
-        "
-      >
-        <div className="flex items-center">
-          <Icon size={20} />
-          {!collapsed && <span className="ml-2">{item}</span>}
-        </div>
-
-        {!collapsed && (
-          <span
-            className={`transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+      {
+        !path ? (
+          // No path: toggle submenu
+          <button
+            type="button"
+            onClick={() => setIsOpen((current) => !current)}
+            className="
+                  flex w-full items-center justify-between
+                  rounded-lg px-3 py-2
+                  text-sm font-medium text-gray-700
+                  hover:bg-gray-100
+                "
           >
-            ▼
-          </span>
-        )}
-      </button>
+            <div className="flex items-center">
+              <Icon size={20} />
+              {!collapsed && <span className="ml-2">{item}</span>}
+            </div>
+
+            {!collapsed && (
+              <span className={`transition-transform ${isOpen ? "rotate-180" : ""}`}>
+                ▼
+              </span>
+            )}
+          </button>
+        ) : (
+          // Path exists: icon toggles, label navigates
+          <div
+            className="
+                  flex w-full items-center justify-between
+                  rounded-lg px-3 py-2
+                  text-sm font-medium text-gray-700
+                  hover:bg-gray-100
+                "
+          >
+            <NavLink
+              to={path}
+              onClick={onNavigate}
+              className={({ isActive }) =>
+                `
+                  block rounded-lg
+                  text-sm font-medium
+                  ${
+                    isActive
+                      ? "bg-gray-100 text-primary"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }
+                `
+              }
+            >
+              <div className="flex items-center">
+                <Icon size={20} />
+                {!collapsed && <span className="ml-2">{item}</span>}
+              </div>
+            </NavLink>
+            <button
+              type="button"
+              onClick={() => setIsOpen((current) => !current)}
+              className="flex items-center"
+              aria-label={`Toggle ${item} submenu`}
+            >
+              {!collapsed && (
+                <span
+                  className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+                >
+                  ▼
+                </span>
+              )}
+            </button>
+          </div>
+        )
+      }
 
       {/* Expanded sidebar submenu */}
       {isOpen && !collapsed && (

@@ -1,15 +1,9 @@
 import MenuItem from "@/components/ui/MenuItem"
 import { SIDEBAR_ITEMS } from "@/config/navigation"
-
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "@/app/store/hooks"
-
-import {
-  toggleSidebar,
-  closeMobileSidebar,
-} from "@/app/store/slices/sidebar"
+import { useCanAccessPage } from "@/features/access"
+import type { BaseMenuItem, MenuItem as SidebarMenuItem } from "@/types/navigation"
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks"
+import { toggleSidebar, closeMobileSidebar } from "@/app/store/slices/sidebar"
 
 function Sidebar() {
   const dispatch = useAppDispatch()
@@ -17,6 +11,40 @@ function Sidebar() {
   const { sidebarCollapsed, mobileSidebarOpen } = useAppSelector(
     (state) => state.sidebar
   )
+
+  // Filter restricted items and their nested children.
+  const filterMenuItems = <T extends BaseMenuItem>(
+    items: T[]
+  ): T[] => {
+    return items.reduce<T[]>((visibleItems, item) => {
+      if (item.requiredPage && !useCanAccessPage(item.requiredPage)) {
+        return visibleItems
+      }
+
+      if ("children" in item && Array.isArray(item.children)) {
+        const children = filterMenuItems(item.children)
+
+        // Hide the parent when all its children are hidden.
+        if (children.length === 0) {
+          return visibleItems
+        }
+
+        visibleItems.push({
+          ...item,
+          children,
+        })
+
+        return visibleItems
+      }
+
+      visibleItems.push(item)
+      return visibleItems
+    }, [])
+  }
+
+  const visibleMenuItems = filterMenuItems(
+    SIDEBAR_ITEMS
+  ) as SidebarMenuItem[]
 
   return (
     <aside
@@ -28,7 +56,6 @@ function Sidebar() {
       `}
     >
       <div className="flex h-full flex-col">
-
         {/* Header */}
         <div className="flex h-16 items-center justify-between border-b px-4">
           <button
@@ -42,7 +69,7 @@ function Sidebar() {
 
         {/* Menu */}
         <nav className="flex-1 p-2">
-          {SIDEBAR_ITEMS.map((menu) => (
+          {visibleMenuItems.map((menu) => (
             <MenuItem
               key={menu.item}
               {...menu}
@@ -62,7 +89,6 @@ function Sidebar() {
             {sidebarCollapsed ? "→" : "Collapse"}
           </button>
         </div>
-
       </div>
     </aside>
   )

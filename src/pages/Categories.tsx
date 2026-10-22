@@ -1,6 +1,6 @@
 import { useCategories } from "@/features/categories"
 
-function CategoriesPage() {
+function Categories() {
   const { data, isPending, isError, error } = useCategories()
 
   if (isPending) {
@@ -27,4 +27,4 @@ return (
   )
 }
 
-export default CategoriesPage
+export default Categories

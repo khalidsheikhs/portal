@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-function RegisterPage() {
+function Register() {
   return (
     <div>
       {/* Heading */}
@@ -138,4 +138,4 @@ function RegisterPage() {
   )
 }
 
-export default RegisterPage
+export default Register

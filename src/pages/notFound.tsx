@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom"
 import { useState, useRef, useLayoutEffect, useEffect } from "react"
 import type { FormEvent, ChangeEvent } from "react"
 
-function NotFoundPage() {
+function NotFound() {
   const contRef = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState(400)
   const [error, setError] = useState("")
@@ -152,4 +152,4 @@ function NotFoundPage() {
   )
 }
 
-export default NotFoundPage
+export default NotFound

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 
-function AuthLayout() {
+function Auth() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="grid min-h-screen lg:grid-cols-2">
@@ -75,4 +75,4 @@ function AuthLayout() {
   )
 }
 
-export default AuthLayout
+export default Auth

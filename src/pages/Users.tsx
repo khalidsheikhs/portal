@@ -1,7 +1,7 @@
 import { UsersList } from "@/features/users"
 import { SelectedUser } from "@/features/users"
 
-function UsersPage() {
+function Users() {
   return (
     <>
       <h2>Users Page</h2>
@@ -12,4 +12,4 @@ function UsersPage() {
   )
 }
 
-export default UsersPage
+export default Users

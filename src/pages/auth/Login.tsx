@@ -3,7 +3,7 @@ import { Link } from "react-router-dom" //, useNavigate
 // import { login } from "@/features/auth/services/authService"
 import { LoginForm } from "@/features/auth"
 
-function LoginPage() {
+function Login() {
   // const navigate = useNavigate()
 
   /* const [email, setEmail] = useState("")
@@ -211,4 +211,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default Login

@@ -1,24 +1,18 @@
-import { Navigate } from "react-router-dom"
-import type { RouteObject } from "react-router-dom"
 
-import AdminLayout from "@/layouts/AdminLayout"
-import AuthLayout from "@/layouts/AuthLayout"
+import { Navigate, type RouteObject } from "react-router-dom"
 
 import PublicRoute from "./PublicRoute"
-import LoginPage from "@/pages/auth/LoginPage"
-import RegisterPage from "@/pages/auth/RegisterPage"
-import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage"
+import AuthLayout from "@/layouts/Auth"
 
 import ProtectedRoute from "./ProtectedRoute"
-import DashboardPage from "@/pages/DashboardPage"
-import UsersPage from "@/pages/UsersPage"
-import CategoriesPage from "@/pages/CategoriesPage"
-
-import NotFoundPage from "@/pages/notFound"
-
+import AdminLayout from "@/layouts/Admin"
 import { RoleBasedRoute } from "@/features/access"
 
-const routes: RouteObject[] = [
+// import Dashboard from "@/pages/Dashboard" // Import when load wihtout router lazyloading
+
+import { lazyRoute } from "./routerHelpers"
+
+export const routes: RouteObject[] = [
   // Public routes
   {
     element: <PublicRoute />,
@@ -28,19 +22,25 @@ const routes: RouteObject[] = [
         children: [
           {
             path: "/login",
-            element: <LoginPage />,
+            lazy: lazyRoute(
+              () => import("@/pages/auth/Login")
+            ),
           },
           {
             path: "/register",
-            element: <RegisterPage />,
+            lazy: lazyRoute(
+              () => import("@/pages/auth/Register")
+            ),
           },
           {
             path: "/forgot-password",
-            element: <ForgotPasswordPage />,
+            lazy: lazyRoute(
+              () => import("@/pages/auth/ForgotPassword")
+            ),
           },
         ],
-      }
-    ]
+      },
+    ],
   },
 
   // Protected routes
@@ -56,14 +56,19 @@ const routes: RouteObject[] = [
           },
           {
             path: "/dashboard",
-            element: <DashboardPage />,
+            // element: <Dashboard />, // Load Without router lazyloading
+            lazy: lazyRoute(
+              () => import("@/pages/Dashboard")
+            ),
           },
           {
             element: <RoleBasedRoute page="users" />,
             children: [
               {
                 path: "/users",
-                element: <UsersPage />,
+                lazy: lazyRoute(
+                  () => import("@/pages/Users")
+                ),
               },
             ],
           },
@@ -72,7 +77,9 @@ const routes: RouteObject[] = [
             children: [
               {
                 path: "/categories",
-                element: <CategoriesPage />,
+                lazy: lazyRoute(
+                  () => import("@/pages/Categories")
+                ),
               },
             ],
           },
@@ -81,12 +88,11 @@ const routes: RouteObject[] = [
     ],
   },
 
-
-  // 404
+  // Not found
   {
     path: "*",
-    element: <NotFoundPage />,
+    lazy: lazyRoute(
+      () => import("@/pages/notFound")
+    ),
   },
 ]
-
-export default routes

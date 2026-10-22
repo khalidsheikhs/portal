@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-function ForgotPasswordPage() {
+function ForgotPassword() {
   return (
     <div>
       {/* Heading */}
@@ -58,4 +58,4 @@ function ForgotPasswordPage() {
   )
 }
 
-export default ForgotPasswordPage
+export default ForgotPassword

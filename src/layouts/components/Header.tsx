@@ -1,12 +1,21 @@
-import { useAppDispatch } from "@/app/store/hooks"
+import { useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks"
 import { openMobileSidebar } from "@/app/store/slices/sidebar"
-import { useAppSelector } from "@/app/store/hooks"
+import { setUnauthenticated, logout } from "@/features/auth"
 
 function Header() {
   const dispatch = useAppDispatch()
   const { user, status } = useAppSelector(
     (state) => state.auth
   )
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    dispatch(setUnauthenticated())
+    navigate("/login", { replace: true })
+  }
 
   return (
     <header className="flex h-16 items-center border-b border-gray-200 bg-white px-4 sm:px-6 lg:px-8 justify-between">
@@ -23,11 +32,53 @@ function Header() {
       <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
         Header UI
       </h2>
-      {
-        status === "loading"
-          ? <span>Loading user...</span>
-          : (user && <p>{user.name}</p>)
-      }
+      <div>
+
+
+<div className="relative">
+  {status === "loading" ? (
+    <span className="text-sm text-gray-500">Loading user...</span>
+  ) : (
+    user && (
+      <details className="group relative">
+        <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+          <span>{user.name}</span>
+          <span aria-hidden="true" className="text-xs">
+            ▼
+          </span>
+        </summary>
+
+        <div className="absolute right-0 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+          <button
+            type="button"
+            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+            onClick={(event) => {
+              event.currentTarget
+                .closest("details")
+                ?.removeAttribute("open")
+            }}
+          >
+            Settings
+          </button>
+
+          <div className="my-1 border-t border-gray-100" />
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+          >
+            Logout
+          </button>
+        </div>
+      </details>
+    )
+  )}
+</div>
+
+
+
+    </div>
     </header>
   )
 }

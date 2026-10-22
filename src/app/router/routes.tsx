@@ -1,98 +1,103 @@
 
-import { Navigate, type RouteObject } from "react-router-dom"
+import { Navigate, Outlet, type RouteObject } from "react-router-dom"
 
 import PublicRoute from "./PublicRoute"
-import AuthLayout from "@/layouts/Auth"
-
 import ProtectedRoute from "./ProtectedRoute"
+import AuthLayout from "@/layouts/Auth"
 import AdminLayout from "@/layouts/Admin"
 import { RoleBasedRoute } from "@/features/access"
-
+import { RouteLoader } from "@/components"
 // import Dashboard from "@/pages/Dashboard" // Import when load wihtout router lazyloading
 
 import { lazyRoute } from "./routerHelpers"
 
 export const routes: RouteObject[] = [
-  // Public routes
   {
-    element: <PublicRoute />,
+    HydrateFallback: RouteLoader,
+    Component: Outlet,
     children: [
+      // Public routes
       {
-        element: <AuthLayout />,
+        element: <PublicRoute />,
         children: [
           {
-            path: "/login",
-            lazy: lazyRoute(
-              () => import("@/pages/auth/Login")
-            ),
-          },
-          {
-            path: "/register",
-            lazy: lazyRoute(
-              () => import("@/pages/auth/Register")
-            ),
-          },
-          {
-            path: "/forgot-password",
-            lazy: lazyRoute(
-              () => import("@/pages/auth/ForgotPassword")
-            ),
-          },
-        ],
-      },
-    ],
-  },
-
-  // Protected routes
-  {
-    element: <ProtectedRoute />,
-    children: [
-      {
-        element: <AdminLayout />,
-        children: [
-          {
-            path: "/",
-            element: <Navigate to="/dashboard" replace />,
-          },
-          {
-            path: "/dashboard",
-            // element: <Dashboard />, // Load Without router lazyloading
-            lazy: lazyRoute(
-              () => import("@/pages/Dashboard")
-            ),
-          },
-          {
-            element: <RoleBasedRoute page="users" />,
+            element: <AuthLayout />,
             children: [
               {
-                path: "/users",
+                path: "/login",
                 lazy: lazyRoute(
-                  () => import("@/pages/Users")
+                  () => import("@/pages/auth/Login")
                 ),
               },
-            ],
-          },
-          {
-            element: <RoleBasedRoute page="categories" />,
-            children: [
               {
-                path: "/categories",
+                path: "/register",
                 lazy: lazyRoute(
-                  () => import("@/pages/Categories")
+                  () => import("@/pages/auth/Register")
+                ),
+              },
+              {
+                path: "/forgot-password",
+                lazy: lazyRoute(
+                  () => import("@/pages/auth/ForgotPassword")
                 ),
               },
             ],
           },
         ],
       },
-    ],
-  },
 
-  // Not found
-  {
-    path: "*",
-    lazy: lazyRoute(
-      () => import("@/pages/notFound")
-    ),
+      // Protected routes
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "/",
+                element: <Navigate to="/dashboard" replace />,
+              },
+              {
+                path: "/dashboard",
+                // element: <Dashboard />, // Load Without router lazyloading
+                lazy: lazyRoute(
+                  () => import("@/pages/Dashboard")
+                ),
+              },
+              {
+                element: <RoleBasedRoute page="users" />,
+                children: [
+                  {
+                    path: "/users",
+                    lazy: lazyRoute(
+                      () => import("@/pages/Users")
+                    ),
+                  },
+                ],
+              },
+              {
+                element: <RoleBasedRoute page="categories" />,
+                children: [
+                  {
+                    path: "/categories",
+                    lazy: lazyRoute(
+                      () => import("@/pages/Categories")
+                    ),
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+
+      // Not found
+      {
+        path: "*",
+        lazy: lazyRoute(
+          () => import("@/pages/notFound")
+        ),
+      },
+    ],
   },
 ]

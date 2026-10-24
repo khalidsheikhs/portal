@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/app/store/hooks"
-import { UserRole } from "../roles"
+import { UserRole } from "@/features/access"
 
 export function useHasRole(role: UserRole): boolean {
   return useAppSelector(

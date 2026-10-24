@@ -1,4 +1,5 @@
-export { default as UserGrowthChart } from "./components/charts/UserGrowthChart"
-export { default as PostsPublishedChart } from "./components/charts/PostsPublishedChart"
-export { default as TrafficSourcesChart } from "./components/charts/TrafficSourcesChart"
-export { default as PageViewsChart } from "./components/charts/PageViewsChart"
+import { lazy } from "react"
+export const UserGrowthChart = lazy(() => import("./components/charts/UserGrowthChart"))
+export const PostsPublishedChart = lazy(() => import("./components/charts/PostsPublishedChart"))
+export const TrafficSourcesChart = lazy(() => import("./components/charts/TrafficSourcesChart"))
+export const PageViewsChart = lazy(() => import("./components/charts/PageViewsChart"))

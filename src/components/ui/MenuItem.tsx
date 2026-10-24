@@ -45,7 +45,7 @@ function MenuItem({
     <div className="relative">
       {/* Parent item */}
       {
-        !path ? (
+        (!path || collapsed) ? (
           // No path: toggle submenu
           <button
             type="button"

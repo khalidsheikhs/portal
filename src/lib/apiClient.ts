@@ -1,5 +1,5 @@
 
-import { env } from "@/config/env";
+import { env } from "@/config/env"
 
 export async function apiClient<T>(
   endpoint: string,
@@ -18,7 +18,7 @@ export async function apiClient<T>(
   )
 
   if (!response.ok) {
-    const error = await response.json().catch(() => null);
+    const error = await response.json().catch(() => null)
 
     throw new Error(
       error?.message || `Request failed (${response.status})`

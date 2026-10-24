@@ -1,7 +1,7 @@
 import MenuItem from "@/components/ui/MenuItem"
 import { SIDEBAR_ITEMS } from "@/config/navigation"
 import { useCanAccessPage } from "@/features/access"
-import type { BaseMenuItem, MenuItem as SidebarMenuItem } from "@/types/navigation"
+import type { BaseMenuItem } from "@/types/navigation"
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks"
 import { toggleSidebar, closeMobileSidebar } from "@/app/store/slices/sidebar"
 
@@ -44,7 +44,7 @@ function Sidebar() {
 
   const visibleMenuItems = filterMenuItems(
     SIDEBAR_ITEMS
-  ) as SidebarMenuItem[]
+  )
 
   return (
     <aside

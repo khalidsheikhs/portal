@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAppSelector } from "@/app/store/hooks"
-import { useCanAccessPage } from "../hooks/useCanAccessPage"
+import { useCanAccessPage } from "../hooks"
 import type { PageKey } from "../types"
 
 interface RoleBasedRouteProps {

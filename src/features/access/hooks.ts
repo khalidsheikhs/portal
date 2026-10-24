@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/app/store/hooks"
-import { canAccessPage } from "../canAccessPage"
-import type { PageKey } from "../types"
+import { canAccessPage } from "./canAccessPage"
+import type { PageKey } from "./types"
 
 export function useCanAccessPage(page: PageKey): boolean {
   const userRoles = useAppSelector(

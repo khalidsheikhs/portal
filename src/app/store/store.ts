@@ -9,6 +9,7 @@ import { authReducer } from "@/features/auth"
     users: usersReducer,
     auth: authReducer,
   },
+  // devTools: false,
 })
 
 export default store

@@ -1,3 +1,4 @@
+import { stripHtml } from "@/utils/stripHtml"
 
 type FormErrorProps = {
   message?: string
@@ -8,7 +9,7 @@ function FormError({ message }: FormErrorProps) {
 
   return (
     <p className="mt-1 text-sm text-danger" role="alert">
-      {message}
+      {stripHtml(message)}
     </p>
   )
 }

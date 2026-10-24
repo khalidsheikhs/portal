@@ -7,6 +7,7 @@ import AuthLayout from "@/layouts/Auth"
 import AdminLayout from "@/layouts/Admin"
 import { RoleBasedRoute } from "@/features/access"
 import { RouteLoader } from "@/components"
+import { usersLoader } from "@/features/users"
 // import Dashboard from "@/pages/Dashboard" // Import when load wihtout router lazyloading
 
 import { lazyRoute } from "./routerHelpers"
@@ -69,6 +70,7 @@ export const routes: RouteObject[] = [
                 children: [
                   {
                     path: "/users",
+                    loader: usersLoader,
                     lazy: lazyRoute(
                       () => import("@/pages/Users")
                     ),

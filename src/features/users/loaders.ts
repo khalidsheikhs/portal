@@ -3,10 +3,10 @@ import store from "@/app/store/store"
 import { fetchUsers } from "./slices"
 
 export async function usersLoader(_args: LoaderFunctionArgs) {
-  const state = store.getState()
+  const { status } = store.getState().users
 
   // Reuse users already loaded in Redux.
-  if (state.users.status === "succeeded") {
+  if (status === "succeeded") {
     return null
   }
 

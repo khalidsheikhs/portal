@@ -17,7 +17,7 @@ const trafficData = [
 
 const COLORS = ["#2563eb", "#16a34a", "#f59e0b", "#9333ea"]
 
-export default function PostsPublishedChart() {
+export default function TrafficSourcesChart() {
   return (
       <DashboardChartCard
         title="Traffic Sources"

@@ -1,5 +1,6 @@
 import { apiClient } from "@/lib/apiClient"
 import { tokenStorage } from "./tokenStorage"
+import { authSession } from "./authSession"
 
 type ValidateTokenResponse = {
   code: string
@@ -38,6 +39,7 @@ export const validateToken = async (): Promise<boolean> => {
 
       if (status === 401 || status === 403) {
         tokenStorage.clear()
+        authSession.clear()
         return false
       }
     }

@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import MenuItem from "@/components/ui/MenuItem"
 import { SIDEBAR_ITEMS } from "@/config/navigation"
 import type { BaseMenuItem } from "@/types/navigation"
-import { canAccessPage, UserRole, type PageKey } from "@/features/access"
+import { canAccessPage, UserRole } from "@/features/access"
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks"
 import { toggleSidebar, closeMobileSidebar } from "@/app/store/slices/sidebar"
 

@@ -1,49 +1,56 @@
+import { useMemo } from "react"
 import MenuItem from "@/components/ui/MenuItem"
 import { SIDEBAR_ITEMS } from "@/config/navigation"
-import { useCanAccessPage } from "@/features/access"
 import type { BaseMenuItem } from "@/types/navigation"
+import { canAccessPage, UserRole, type PageKey } from "@/features/access"
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks"
 import { toggleSidebar, closeMobileSidebar } from "@/app/store/slices/sidebar"
 
+// Filter restricted items and their nested children.
+const filterMenuItems = <T extends BaseMenuItem>(
+  items: T[],
+  userRoles: UserRole[]
+): T[] => {
+  return items.reduce<T[]>((visibleItems, item) => {
+    if (item.requiredPage && !canAccessPage(item.requiredPage, userRoles)) {
+      return visibleItems
+    }
+
+    if ("children" in item && Array.isArray(item.children)) {
+      const children = filterMenuItems(item.children, userRoles)
+
+      // Hide the parent when all its children are hidden.
+      if (children.length === 0) {
+        return visibleItems
+      }
+
+      visibleItems.push({
+        ...item,
+        children,
+      })
+
+      return visibleItems
+    }
+
+    visibleItems.push(item)
+    return visibleItems
+  }, [])
+}
+
 function Sidebar() {
   const dispatch = useAppDispatch()
+
+  const roles = useAppSelector(
+    (state) => state.auth.user?.roles ?? []
+  )
 
   const { sidebarCollapsed, mobileSidebarOpen } = useAppSelector(
     (state) => state.sidebar
   )
 
-  // Filter restricted items and their nested children.
-  const filterMenuItems = <T extends BaseMenuItem>(
-    items: T[]
-  ): T[] => {
-    return items.reduce<T[]>((visibleItems, item) => {
-      if (item.requiredPage && !useCanAccessPage(item.requiredPage)) {
-        return visibleItems
-      }
-
-      if ("children" in item && Array.isArray(item.children)) {
-        const children = filterMenuItems(item.children)
-
-        // Hide the parent when all its children are hidden.
-        if (children.length === 0) {
-          return visibleItems
-        }
-
-        visibleItems.push({
-          ...item,
-          children,
-        })
-
-        return visibleItems
-      }
-
-      visibleItems.push(item)
-      return visibleItems
-    }, [])
-  }
-
-  const visibleMenuItems = filterMenuItems(
-    SIDEBAR_ITEMS
+  const visibleMenuItems = useMemo(
+    () => filterMenuItems(SIDEBAR_ITEMS, roles),
+    [roles]
   )
 
   return (

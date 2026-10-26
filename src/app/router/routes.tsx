@@ -1,4 +1,3 @@
-
 import { Navigate, Outlet, type RouteObject } from "react-router-dom"
 
 import PublicRoute from "./PublicRoute"

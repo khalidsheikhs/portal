@@ -1,6 +1,7 @@
 import { apiClient } from "@/lib/apiClient"
 import type { LoginRequest, LoginResponse } from "../types"
 import { tokenStorage } from "./tokenStorage"
+import { authSession } from "./authSession"
 
 export const login = async (
   credentials: LoginRequest
@@ -14,6 +15,7 @@ export const login = async (
   )
 
   tokenStorage.set(response.token)
+  authSession.set()
 
   return response
 }

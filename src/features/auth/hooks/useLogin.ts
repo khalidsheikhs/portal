@@ -3,7 +3,8 @@ import type { LoginRequest } from "../types"
 import { useAppDispatch } from "@/app/store/hooks"
 import { login } from "../services/login"
 import { getUser } from "../services/getUser"
-import { tokenStorage } from "../services/tokenStorage"
+// import { tokenStorage } from "../services/tokenStorage"
+import { authSession } from "../services/authSession"
 import { setAuthenticated } from "../slices"
 
 export function useLogin() {
@@ -16,7 +17,8 @@ export function useLogin() {
       try {
         return await getUser()
       } catch (error) {
-        tokenStorage.clear()
+        // tokenStorage.clear()
+        authSession.clear()
         throw error
       }
     },

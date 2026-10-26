@@ -2,7 +2,9 @@ import { useEffect } from "react"
 import { useAppDispatch } from "@/app/store/hooks"
 
 import { getUser } from "./services/getUser"
-import { tokenStorage } from "./services/tokenStorage"
+// import { tokenStorage } from "./services/tokenStorage"
+import { authSession } from "./services/authSession"
+
 
 import {
   setAuthenticated,
@@ -16,9 +18,10 @@ function AuthInitializer() {
     let cancelled = false
 
     const initializeAuth = async () => {
-      const storedToken = tokenStorage.get()
+      // const storedToken = tokenStorage.get()
+      const isLoggedIn = authSession.get()
 
-      if (!storedToken) {
+      if (!isLoggedIn) {
         dispatch(setUnauthenticated())
         return
       }
@@ -31,7 +34,8 @@ function AuthInitializer() {
         }
       } catch {
         if (!cancelled) {
-          tokenStorage.clear()
+          // tokenStorage.clear()
+          authSession.clear()
           dispatch(setUnauthenticated())
         }
       }

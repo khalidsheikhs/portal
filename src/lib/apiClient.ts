@@ -1,4 +1,3 @@
-
 import { env } from "@/config/env"
 
 export async function apiClient<T>(
@@ -9,7 +8,7 @@ export async function apiClient<T>(
     `${env.API_BASE_URL}${endpoint}`,
     {
       ...options,
-      // credentials: 'include',
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         ...options.headers,

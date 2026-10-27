@@ -1,45 +1,21 @@
-import { apiClient } from "@/lib/apiClient"
-import { tokenStorage } from "./tokenStorage"
-import { authSession } from "./authSession"
-
-type ValidateTokenResponse = {
-  code: string
-  data: {
-    status: number
-  }
-}
+import { getUser } from "./getUser"
+import { csrfNonceSession } from "./csrfNonceSession"
 
 export const validateToken = async (): Promise<boolean> => {
-  const savedToken = tokenStorage.get()
-
-  if (!savedToken) {
-    return false
-  }
+  if (!csrfNonceSession.get()) return false
 
   try {
-    await apiClient<ValidateTokenResponse>(
-      "/jwt-auth/v1/token/validate",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${savedToken}`,
-        },
-      }
-    )
-
+    await getUser()
     return true
   } catch (error) {
     if (
       error instanceof Error &&
       error.message.startsWith("Request failed (")
     ) {
-      const status = Number(
-        error.message.match(/\((\d+)\)$/)?.[1]
-      )
+      const status = Number(error.message.match(/\((\d+)\)$/)?.[1])
 
       if (status === 401 || status === 403) {
-        tokenStorage.clear()
-        authSession.clear()
+        csrfNonceSession.clear()
         return false
       }
     }

@@ -11,8 +11,13 @@ function Header() {
 
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    try {
+      await logout()
+    } catch (error) {
+      console.error("Could not clear the server authentication cookie.", error)
+    }
+
     dispatch(setUnauthenticated())
     navigate("/login", { replace: true })
   }

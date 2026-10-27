@@ -9,7 +9,7 @@ export type LoginResponse = {
   user_display_name: string
   user_nicename: string
   user_email: string
-  token: string
+  csrf_nonce: string
 }
 
 export type User = {

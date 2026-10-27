@@ -1,5 +1,5 @@
 export { default as LoginForm } from "./components/LoginForm"
 export { default as AuthInitializer } from "./AuthInitializer"
-export { default as authReducer } from "./slices"
-export {  setUnauthenticated } from "./slices"
+export { default as authReducer, setUnauthenticated } from "./slices"
 export { logout } from "./services/logout"
+export { csrfNonceSession } from "./services/csrfNonceSession"

@@ -1,7 +1,6 @@
 import { apiClient } from "@/lib/apiClient"
 import type { LoginRequest, LoginResponse } from "../types"
-import { tokenStorage } from "./tokenStorage"
-import { authSession } from "./authSession"
+import { csrfNonceSession } from "./csrfNonceSession"
 
 export const login = async (
   credentials: LoginRequest
@@ -14,8 +13,11 @@ export const login = async (
     }
   )
 
-  tokenStorage.set(response.token)
-  authSession.set()
+  if (!response.csrf_nonce) {
+    throw new Error("Login response did not include a CSRF nonce.")
+  }
+
+  csrfNonceSession.set(response.csrf_nonce)
 
   return response
 }

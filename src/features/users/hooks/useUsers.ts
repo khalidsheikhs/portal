@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query"
+import useAppQuery from "@/hooks/useAppQuery"
 import { usersQueryOptions } from "../queries"
 
 export default function useUsers() {
-  const { data, isLoading, error } = useQuery(usersQueryOptions)
+  const { data, loading, error } = useAppQuery(usersQueryOptions)
 
   return {
     users: data ?? [],
-    loading: isLoading,
+    loading,
     error,
   }
 }

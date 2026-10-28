@@ -1,3 +1,4 @@
+
 import { env } from "@/config/env"
 import { csrfNonceSession } from "@/features/auth/"
 
@@ -18,13 +19,19 @@ export async function apiClient<T>(
     `${env.API_BASE_URL}${endpoint}`,
     {
       ...options,
-      credentials: 'include',
+      credentials: "include",
       headers,
     }
   )
 
   if (!response.ok) {
     const error = await response.json().catch(() => null)
+
+    // Handle invalid WordPress nonce
+    if (error?.code === "vendor_auth_invalid_nonce") {
+      window.location.replace("/login")
+      throw new Error("Session expired. Please log in again.")
+    }
 
     throw new Error(
       error?.message || `Request failed (${response.status})`

@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query"
+import useAppQuery from "@/hooks/useAppQuery"
 import { categoriesQueryOptions } from "./queries"
 
 export default function useCategories() {
-  const { data, isLoading, error } = useQuery(categoriesQueryOptions)
+  const { data, loading, error } = useAppQuery(categoriesQueryOptions)
 
   return {
     categories: data ?? [],
-    loading: isLoading,
+    loading,
     error,
   }
 }

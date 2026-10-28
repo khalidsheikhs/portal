@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { UsersState } from "./types"
 import { getUsers } from "./services"
+import type { RootState } from "@/app/store/types"
 
 const initialState: UsersState = {
   users: [],
@@ -13,6 +14,12 @@ export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async () => {
     return await getUsers()
+  },
+  {
+    condition: (_, { getState }) => {
+      const { status } = (getState() as RootState).users
+      return status !== "loading" && status !== "succeeded"
+    },
   }
 )
 

@@ -16,6 +16,7 @@ export default function useAppQuery<
 ) {
   const { data, isLoading, error } = useQuery({
     ...options,
+    staleTime: options.staleTime ?? 1000 * 60 * 5, // Default stale time of 5 minutes
   })
 
   return {

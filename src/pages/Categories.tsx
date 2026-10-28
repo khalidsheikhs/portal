@@ -1,24 +1,24 @@
 import { useCategories } from "@/features/categories"
 
 function Categories() {
-  const { data, isPending, isError, error } = useCategories()
+  const { categories, loading, error } = useCategories()
 
-  if (isPending) {
+  if (loading) {
     return <p>Loading categories...</p>
   }
 
-  if (isError) {
+  if (error) {
     return <p>Error: {error.message}</p>
   }
 
-  if (!data?.length) {
+  if (!categories?.length) {
     return <p>No categories found.</p>
   }
 
 return (
     <>
       <h2>Categories Page</h2>
-      {data && data.map((category) => (
+      {categories && categories.map((category) => (
         <p key={category.id}>
           {category.name}
         </p>

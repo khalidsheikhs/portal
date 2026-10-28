@@ -14,7 +14,7 @@ function UsersList() {
   }
 
   if (error) {
-    return <p>Error: {error}</p>
+    return <p>Error: {error.message}</p>
   }
 
   if (!users?.length) {
@@ -32,11 +32,11 @@ function UsersList() {
       </thead>
       <tbody>
           {users.map((user) => (
-          <tr key={user.id} className={user.id === selectedUser ? 'active' : '' }>
+          <tr key={user.id} className={user.id === selectedUser?.id ? 'active' : '' }>
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>
-              <Button onClick={() => dispatch(selectUser(user.id))}>
+              <Button onClick={() => dispatch(selectUser(user))}>
                 View User
               </Button>
             </td>

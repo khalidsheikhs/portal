@@ -3,10 +3,3 @@ export type User = {
   name: string
   email: string
 }
-
-export type UsersState = {
-  users: User[]
-  selectedUser: number | null
-  status: "idle" | "loading" | "succeeded" | "failed"
-  error: string | null
-}

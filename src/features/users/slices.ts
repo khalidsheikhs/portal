@@ -1,52 +1,19 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import type { UsersState } from "./types"
-import { getUsers } from "./services"
-import type { RootState } from "@/app/store/types"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
+import type { User } from "./types"
 
-const initialState: UsersState = {
-  users: [],
-  selectedUser: null,
-  status: "idle",
-  error: null,
+const initialState: { user: User | null } = {
+  user: null,
 }
 
-export const fetchUsers = createAsyncThunk(
-  "users/fetchUsers",
-  async () => {
-    return await getUsers()
-  },
-  {
-    condition: (_, { getState }) => {
-      const { status } = (getState() as RootState).users
-      return status !== "loading" && status !== "succeeded"
-    },
-  }
-)
-
-const usersSlice = createSlice({
-  name: "users",
+const selectedUserSlice = createSlice({
+  name: "selected user",
   initialState,
   reducers: {
-    selectUser(state, action) {
-      state.selectedUser = action.payload
+    selectUser(state, action: PayloadAction<User | null>) {
+      state.user = action.payload
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchUsers.pending, (state) => {
-        state.status = "loading"
-        state.error = null
-      })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.status = "succeeded"
-        state.users = action.payload
-      })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        state.status = "failed"
-        state.error = action.error.message ?? "Failed to fetch users"
-      })
   },
 })
 
-export const { selectUser } = usersSlice.actions
-export default usersSlice.reducer
+export const { selectUser } = selectedUserSlice.actions
+export default selectedUserSlice.reducer

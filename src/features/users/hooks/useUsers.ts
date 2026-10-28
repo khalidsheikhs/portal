@@ -1,14 +1,12 @@
-
-import { useAppSelector } from "@/app/store/hooks"
+import { useQuery } from "@tanstack/react-query"
+import { usersQueryOptions } from "../queries"
 
 export default function useUsers() {
-  const { users, status, error } = useAppSelector(
-    (state) => state.users
-  )
+  const { data, isLoading, error } = useQuery(usersQueryOptions)
 
   return {
-    users,
-    loading: status === "loading",
+    users: data ?? [],
+    loading: isLoading,
     error,
   }
 }

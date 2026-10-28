@@ -5,7 +5,7 @@ function SelectedUser() {
   return (
     <>
       {selectedUser && (
-        <p>Selected user ID: {selectedUser}</p>
+        <p>Selected user ID: {selectedUser.id}</p>
       )}
     </>
   )

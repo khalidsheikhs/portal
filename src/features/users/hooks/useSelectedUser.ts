@@ -1,11 +1,11 @@
 import { useAppSelector } from "@/app/store/hooks"
 
 export default function useSelectedUsers() {
-  const { selectedUser } = useAppSelector(
-    (state) => state.users
+  const { user } = useAppSelector(
+    (state) => state.selectedUser
   )
 
   return {
-    selectedUser
+    selectedUser: user
   }
 }

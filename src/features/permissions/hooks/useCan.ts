@@ -1,7 +1,6 @@
-import { useAppSelector } from "@/app/store/hooks"
+import { useAuth } from "@/features/auth"
 
 export function useCan(capability: string): boolean {
-  return useAppSelector(
-    (state) => state.auth.user?.capabilities[capability] === true
-  )
+  const user = useAuth((state) => state.user)
+  return user?.capabilities?.[capability] ?? false
 }

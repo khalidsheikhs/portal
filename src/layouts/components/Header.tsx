@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import { useSidebar } from "@/stores/sidebar"
 import { logout } from "@/features/auth"
 import { useShallow } from "zustand/react/shallow" 
@@ -17,17 +16,15 @@ function Header() {
       }))
     )
   const showMobileMenu = useSidebar((state) => state.showMobileMenu)
-  const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
       await logout()
     } catch (error) {
       console.error("Could not clear the server authentication cookie.", error)
+    } finally {
+      unsetAuth()
     }
-
-    unsetAuth()
-    navigate("/login", { replace: true })
   }
 
   return (

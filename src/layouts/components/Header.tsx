@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom"
-// import { showMobileMenu } from "@/app/store/slices/sidebar"
-// import { useAppSelector } from "@/app/store/hooks" // useAppDispatch,
 import { useSidebar } from "@/stores/sidebar"
-import { logout } from "@/features/auth" // unsetAuth,
+import { logout } from "@/features/auth"
 import { useShallow } from "zustand/react/shallow" 
 import { useAuth } from "@/features/auth"
 
 function Header() {
-  // const dispatch = useAppDispatch()
   const {
       user,
       status,
@@ -16,13 +13,10 @@ function Header() {
       useShallow((state) => ({
         user: state.user,
         status: state.status,
-        unsetAuth:state.unsetAuth,
+        unsetAuth: state.unsetAuth,
       }))
     )
-  // const { user, status } = useAppSelector((state) => state.auth)
-
   const showMobileMenu = useSidebar((state) => state.showMobileMenu)
-
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -32,7 +26,6 @@ function Header() {
       console.error("Could not clear the server authentication cookie.", error)
     }
 
-    // dispatch(unsetAuth())
     unsetAuth()
     navigate("/login", { replace: true })
   }

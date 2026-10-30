@@ -3,8 +3,6 @@ import MenuItem from "@/components/ui/MenuItem"
 import { SIDEBAR_ITEMS } from "@/config/navigation"
 import type { BaseMenuItem } from "@/types/navigation"
 import { canAccessPage, UserRole } from "@/features/access"
-// import { useAppDispatch, useAppSelector } from "@/app/store/hooks"
-// import { toggleSidebar, hideMobileMenu } from "@/app/store/slices/sidebar"
 import { useShallow } from "zustand/react/shallow"
 import { useAuth } from "@/features/auth/stores"
 import { useSidebar } from "@/stores/sidebar"
@@ -41,11 +39,7 @@ const filterMenuItems = <T extends BaseMenuItem>(
 }
 
 function Sidebar() {
-  // const dispatch = useAppDispatch()
-  // const { sidebarCollapsed, mobileMenu } = useAppSelector((state) => state.sidebar)
-  // const roles = useAppSelector((state) => state.auth.user?.roles ?? [])
   const roles = useAuth((state) => state.user?.roles ?? [])
-
   const {
     sidebarCollapsed,
     toggleSidebar,
@@ -59,7 +53,6 @@ function Sidebar() {
       hideMobileMenu: state.hideMobileMenu,
     }))
   )
-
   const visibleMenuItems = useMemo(() => filterMenuItems(SIDEBAR_ITEMS, roles), [roles])
 
   return (

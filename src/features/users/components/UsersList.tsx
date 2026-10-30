@@ -1,14 +1,9 @@
 import { Button } from "@/components/index"
-// import { useAppDispatch } from "@/app/store/hooks"
-// import { selectUser } from "../slices"
 import useUsers from "../hooks"
-// import useSelectedUser from "./../hooks/useSelectedUser"
-import { useSelectedUser } from "./../stores"
+import { useSelectedUser } from "../stores"
 
 function UsersList() {
-  // const dispatch = useAppDispatch()
   const { users, loading, error } = useUsers()
-
   const selectedUser = useSelectedUser((state) => state.user)
   const selectUser = useSelectedUser((state) => state.selectUser)
 

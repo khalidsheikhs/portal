@@ -3,12 +3,9 @@ import type { LoginRequest } from "./types"
 import { login } from "./services/login"
 import { getUser } from "./services/getUser"
 import { csrfNonceSession } from "./services/csrfNonceSession"
-// import { useAppDispatch } from "@/app/store/hooks"
-// import { setAuth } from "./slices"
 import { useAuth } from "./stores"
 
 export function useLogin() {
-  // const dispatch = useAppDispatch()
   const setAuth = useAuth((state) => state.setAuth)
 
   return useMutation({

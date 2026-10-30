@@ -1,13 +1,16 @@
 import { Button } from "@/components/index"
-import { useAppDispatch } from "@/app/store/hooks"
-import { selectUser } from "../slices"
-import useUsers from "./../hooks/useUsers"
-import useSelectedUser from "./../hooks/useSelectedUser"
+// import { useAppDispatch } from "@/app/store/hooks"
+// import { selectUser } from "../slices"
+import useUsers from "../hooks"
+// import useSelectedUser from "./../hooks/useSelectedUser"
+import { useSelectedUser } from "./../stores"
 
 function UsersList() {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
   const { users, loading, error } = useUsers()
-  const { selectedUser } = useSelectedUser()
+
+  const selectedUser = useSelectedUser((state) => state.user)
+  const selectUser = useSelectedUser((state) => state.selectUser)
 
   if (loading) {
     return <p>Loading users...</p>
@@ -36,7 +39,7 @@ function UsersList() {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>
-              <Button onClick={() => dispatch(selectUser(user))}>
+              <Button onClick={() => selectUser(user)}>
                 View User
               </Button>
             </td>

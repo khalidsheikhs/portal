@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { useAppSelector } from "@/app/store/hooks"
+// import { useAppSelector } from "@/app/store/hooks"
+import { useAuth } from "@/features/auth"
 import { useCanAccessPage } from "../hooks"
 import type { PageKey } from "../types"
 
@@ -8,7 +9,8 @@ interface RoleBasedRouteProps {
 }
 
 function RoleBasedRoute({ page }: RoleBasedRouteProps) {
-  const status = useAppSelector((state) => state.auth.status)
+  // const status = useAppSelector((state) => state.auth.status)
+  const status = useAuth((state) => state.status)
   const canAccessPage = useCanAccessPage(page)
 
   if (status === "loading") {

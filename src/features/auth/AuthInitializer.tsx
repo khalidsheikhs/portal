@@ -1,11 +1,14 @@
 import { useEffect } from "react"
-import { useAppDispatch } from "@/app/store/hooks"
 import { getUser } from "./services/getUser"
 import { csrfNonceSession } from "./services/csrfNonceSession"
-import { setAuthenticated, setUnauthenticated } from "./slices"
+// import { useAppDispatch } from "@/app/store/hooks"
+// import { setAuth, unsetAuth } from "./slices"
+import { useAuth } from "./stores"
 
 function AuthInitializer() {
-  const dispatch = useAppDispatch()
+  //const dispatch = useAppDispatch()
+  const setAuth = useAuth((state) => state.setAuth)
+  const unsetAuth = useAuth((state) => state.unsetAuth)
 
   useEffect(() => {
     let cancelled = false
@@ -14,7 +17,8 @@ function AuthInitializer() {
       const csrfNonce = csrfNonceSession.get()
 
       if (!csrfNonce) {
-        dispatch(setUnauthenticated())
+        // dispatch(unsetAuth())
+        unsetAuth()
         return
       }
 
@@ -22,12 +26,14 @@ function AuthInitializer() {
         const user = await getUser()
 
         if (!cancelled) {
-          dispatch(setAuthenticated(user))
+          // dispatch(setAuth(user))
+          setAuth(user)
         }
       } catch {
         if (!cancelled) {
           if (csrfNonceSession.get()) csrfNonceSession.clear()
-          dispatch(setUnauthenticated())
+          // dispatch(unsetAuth())
+          unsetAuth()
         }
       }
     }
@@ -37,7 +43,7 @@ function AuthInitializer() {
     return () => {
       cancelled = true
     }
-  }, [dispatch])
+  }, []) // dispatch, 
 
   return null
 }

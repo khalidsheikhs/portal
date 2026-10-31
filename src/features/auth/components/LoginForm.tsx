@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useNavigate } from "react-router-dom"
 import { loginSchema, type LoginFormValues } from "../schemas/login.schema"
 import { Input, Button, FormError } from "@/components"
 import { useLogin } from "../hooks"
+// import { useNavigate } from "react-router-dom"
 
 function LoginForm() {
   const {
@@ -20,13 +20,13 @@ function LoginForm() {
   })
 
   const { mutateAsync, isPending } = useLogin()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
       // const response = await login(data)
       await mutateAsync(data)
-      navigate("/dashboard")
+      // navigate("/dashboard")
     } catch (error) {
       setError("root.server", {
       message:
@@ -38,11 +38,11 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <div className="mb-4">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="mt-4 space-y-5">
+      <div>
         <label
           htmlFor="username"
-          className="mb-1 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-medium text-slate-700"
         >
           Username or Email
         </label>
@@ -55,6 +55,7 @@ function LoginForm() {
           {...register("username")}
           aria-invalid={Boolean(errors.username)}
           aria-describedby={errors.username ? "username-error" : undefined}
+          className="px-4 py-3"
         />
 
         <div id="email-error">
@@ -62,10 +63,10 @@ function LoginForm() {
         </div>
       </div>
 
-      <div className="mb-6">
+      <div>
         <label
           htmlFor="password"
-          className="mb-1 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-medium text-slate-700"
         >
           Password
         </label>
@@ -80,6 +81,7 @@ function LoginForm() {
           aria-describedby={
             errors.password ? "password-error" : undefined
           }
+          className="px-4 py-3"
         />
 
         <div id="password-error">
@@ -90,7 +92,7 @@ function LoginForm() {
       <Button
         type="submit"
         disabled={isSubmitting || isPending}
-        className="w-full text-sm font-medium"
+        className="w-full py-3 text-sm font-semibold"
       >
         {(isSubmitting || isPending) ? "Signing in..." : "Sign in"}
       </Button>

@@ -1,58 +1,7 @@
-// import { useState } from "react"
-import { Link } from "react-router-dom" //, useNavigate
-// import { login } from "@/features/auth/services/authService"
+import { Link } from "react-router-dom"
 import { LoginForm } from "@/features/auth"
 
 function Login() {
-  // const navigate = useNavigate()
-
-  /* const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    setError("")
-
-    if (!email.trim()) {
-      setError("Please enter your email address.")
-      return
-    }
-
-    if (!password) {
-      setError("Please enter your password.")
-      return
-    }
-
-    try {
-      setIsLoading(true)
-
-      const response = await login({
-        email,
-        password,
-      })
-
-      console.log("Login successful:", response)
-
-      // Temporary:
-      // Later we will put authentication into Redux.
-      localStorage.setItem("token", response.accessToken)
-
-      // navigate("/dashboard")
-    } catch (error) {
-      setError(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again."
-      )
-    } finally {
-      setIsLoading(false)
-    }
-  } */
-
   const handleGoogleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log(event)
   }
@@ -71,89 +20,6 @@ function Login() {
       </div>
 
       {/* Login Form */}
-      {/*<form onSubmit={handleSubmit} className="mt-8 space-y-5">
-        {/\* Email *\/}
-        <div>
-          <label
-            htmlFor="email"
-            className="mb-2 block text-sm font-medium text-slate-700">
-            Email address
-          </label>
-
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="you@example.com"
-            autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            className="block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
-          />
-        </div>
-
-        {/\* Password *\/}
-        <div>
-          <div className="mb-2 flex items-center justify-between">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-slate-700">
-              Password
-            </label>
-
-            <Link
-              to="/forgot-password"
-              className="text-sm font-medium text-primary hover:text-blue-700"
-            >
-              Forgot password?
-            </Link>
-          </div>
-
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter your password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
-          />
-        </div>
-
-        {/\* Remember me *\/}
-        <div className="flex items-center">
-          <input
-            id="remember"
-            name="remember"
-            type="checkbox"
-            className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
-          />
-
-          <label
-            htmlFor="remember"
-            className="ml-2 text-sm text-slate-600"
-          >
-            Remember me
-          </label>
-        </div>
-
-        {/\* Error *\/}
-        {error && (
-          <p className="text-sm text-red-600">
-            {error}
-          </p>
-        )}
-
-        {/\* Login button *\/}
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-[0.99]"
-        >
-          {isLoading ? "Signing in..." : "Sign in"}
-        </button>
-      </form> */}
       <LoginForm />
 
       {/* Divider */}
@@ -197,7 +63,18 @@ function Login() {
         Continue with Google
       </button>
 
-      {/* Register */}
+      {/* Forgot Password */}
+      <p className="mt-8 text-center text-sm text-slate-500">
+        Forget your password?{" "}
+        <Link
+          to="/forgot-password"
+          className="font-semibold text-primary hover:text-blue-700"
+        >
+          Click here
+        </Link>
+      </p>
+
+      {/* Register *\/}
       <p className="mt-8 text-center text-sm text-slate-500">
         Don't have an account?{" "}
         <Link
@@ -206,7 +83,7 @@ function Login() {
         >
           Create an account
         </Link>
-      </p>
+      </p> */}
     </div>
   )
 }

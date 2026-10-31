@@ -3,7 +3,7 @@ import { getUser } from "./services/getUser"
 import { csrfNonceSession } from "./services/csrfNonceSession"
 import { useAuth } from "./stores"
 
-function AuthInitializer() {
+export function AuthInitializer() {
   const setAuth = useAuth((state) => state.setAuth)
   const unsetAuth = useAuth((state) => state.unsetAuth)
 
@@ -38,5 +38,3 @@ function AuthInitializer() {
 
   return null
 }
-
-export default AuthInitializer

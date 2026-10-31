@@ -1,5 +1,6 @@
 export { default as LoginForm } from "./components/LoginForm"
-export { default as AuthInitializer } from "./AuthInitializer"
+export { default as ForgotPasswordForm } from "./components/ForgotPasswordForm"
+export { AuthInitializer } from "./AuthInitializer"
 export { useAuth } from "./stores"
-export { logout } from "./services/logout"
+export { useLogout } from "./hooks/useLogout"
 export { csrfNonceSession } from "./services/csrfNonceSession"

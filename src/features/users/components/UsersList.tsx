@@ -2,15 +2,16 @@ import { Button } from "@/components/index"
 import useUsers from "../hooks"
 import { useSelectedUser } from "../stores"
 import { useCan } from "@/features/permissions/hooks/useCan"
+import type { User } from "../types"
 
 function UsersList() {
   const { users, loading, error } = useUsers()
   const selectedUser = useSelectedUser((state) => state.user)
   const selectUser = useSelectedUser((state) => state.selectUser)
 
-  const editUser = async (id: number) => {
-    selectUser(id)
-    console.log("Edit user with ID:", selectedUser)
+  const editUser = async (user: User) => {
+    selectUser(user)
+    console.log("Edit user:", selectedUser)
   }
 
   if (loading) {
@@ -40,7 +41,7 @@ function UsersList() {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>
-              <Button disabled={!useCan("edit_users")} onClick={() => editUser(user.id)}>
+              <Button disabled={!useCan("edit_users")} onClick={() => editUser(user)}>
                 Update
               </Button>
             </td>

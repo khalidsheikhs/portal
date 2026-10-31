@@ -1,29 +1,25 @@
+import { useShallow } from "zustand/react/shallow"
 import { useSidebar } from "@/stores/sidebar"
-import { logout } from "@/features/auth"
-import { useShallow } from "zustand/react/shallow" 
-import { useAuth } from "@/features/auth"
+import { useAuth, useLogout } from "@/features/auth"
 
 function Header() {
   const {
       user,
       status,
-      unsetAuth,
     } = useAuth(
       useShallow((state) => ({
         user: state.user,
         status: state.status,
-        unsetAuth: state.unsetAuth,
       }))
     )
   const showMobileMenu = useSidebar((state) => state.showMobileMenu)
+  const { mutateAsync: logoutUser, isPending } = useLogout()
 
   const handleLogout = async () => {
     try {
-      await logout()
+      await logoutUser()
     } catch (error) {
-      console.error("Could not clear the server authentication cookie.", error)
-    } finally {
-      unsetAuth()
+      console.error("Logout failed:", error)
     }
   }
 
@@ -73,9 +69,10 @@ function Header() {
                 <button
                   type="button"
                   onClick={handleLogout}
+                  disabled={isPending}
                   className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50"
                 >
-                  Logout
+                  {isPending ? "Signing out..." : "Logout"}
                 </button>
               </div>
             </details>

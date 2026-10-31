@@ -1,1 +1,1 @@
-export { default as useCategories } from "./hooks"
+export { useCategories } from "./hooks"

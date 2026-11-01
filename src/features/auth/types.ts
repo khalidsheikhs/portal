@@ -20,3 +20,10 @@ export type User = {
   roles: UserRole[]
   capabilities: Record<string, boolean>
 }
+
+export type ForgotPasswordResponse = {
+  data: {
+    status: number
+  }
+  message: string
+}

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { ForgotPasswordForm } from "@/features/auth"
 
 function ForgotPassword() {
   return (
@@ -16,34 +17,7 @@ function ForgotPassword() {
       </div>
 
       {/* Form */}
-      <form className="mt-8 space-y-5">
-        {/* Email */}
-        <div>
-          <label
-            htmlFor="email"
-            className="mb-2 block text-sm font-medium text-slate-700"
-          >
-            Email address
-          </label>
-
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="you@example.com"
-            autoComplete="email"
-            className="block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
-          />
-        </div>
-
-        {/* Submit */}
-        <button
-          type="submit"
-          className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-[0.99]"
-        >
-          Send reset link
-        </button>
-      </form>
+      <ForgotPasswordForm />
 
       {/* Back to Login */}
       <div className="mt-8 text-center">

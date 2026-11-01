@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from "../schemas/forgotPassword.schema"
@@ -7,6 +8,7 @@ import { forgotPassword } from "../services/forgotPassword"
 function ForgotPasswordForm() {
   const {
     register,
+    resetField,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
@@ -16,17 +18,24 @@ function ForgotPasswordForm() {
       email: "",
     },
   })
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const onSubmit = async (data: ForgotPasswordFormValues) => {
+    setSuccessMessage("")
+
     try {
-      await forgotPassword(data)
-      // console.log("Forgot password form submitted with data:", response)
+      const response = await forgotPassword(data)
+
+      if (response.data.status === 200) {
+        setSuccessMessage(response.message)
+        resetField("email")
+      }
     } catch (error) {
       setError("root.server", {
-      message:
-        error instanceof Error
-          ? error.message
-          : "Something went wrong",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong",
       })
     }
   }
@@ -68,6 +77,9 @@ function ForgotPasswordForm() {
       </Button>
       {errors.root?.server?.message && (
         <FormError message={errors.root.server.message} />
+      )}
+      {successMessage && (
+        <p className="mt-1 text-sm text-success" role="status">{successMessage}</p>
       )}
     </form>
   )

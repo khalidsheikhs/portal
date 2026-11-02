@@ -8,12 +8,12 @@ export default defineConfig({
 
   server: {
     host: "0.0.0.0",
-    proxy: {
+    /* proxy: {
       "/wp-json": {
         target: "http://cms-backend.local",
         changeOrigin: true,
       },
-    },
+    },*/
     watch: {
       usePolling: true,
     },

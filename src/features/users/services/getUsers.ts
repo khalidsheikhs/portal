@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient"
-import type { User } from "./types"
+import type { User } from "../types"
 
 export const getUsers = async (): Promise<User[]> => {
   const response = await apiClient<User[]>(

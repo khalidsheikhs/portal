@@ -1,3 +1,4 @@
 export { default as UsersList } from "./components/UsersList"
+export { default as UserForm } from "./components/UserForm"
 export { default as SelectedUser } from "./components/SelectedUser"
-export { usersLoader } from "./loaders"
+export { userQueryOptions } from "./queries/userQueryOptions"

@@ -1,7 +1,8 @@
-import { useCategories } from "@/features/categories"
+import useAppQuery from "@/hooks/useAppQuery"
+import { categoriesQueryOptions } from "@/features/categories/queries"
 
 function Categories() {
-  const { categories, loading, error } = useCategories()
+  const { data: categories, loading, error } = useAppQuery(categoriesQueryOptions)
 
   if (loading) {
     return <p>Loading categories...</p>

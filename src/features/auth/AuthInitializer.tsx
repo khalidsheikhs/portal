@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { getUser } from "./services/getUser"
+import { getUserInfo } from "./services/getUserInfo"
 import { csrfNonceSession } from "./services/csrfNonceSession"
 import { useAuth } from "./stores"
 
@@ -19,7 +19,7 @@ export function AuthInitializer() {
       }
 
       try {
-        const user = await getUser()
+        const user = await getUserInfo()
         if (!cancelled) setAuth(user)
       } catch {
         if (!cancelled) {

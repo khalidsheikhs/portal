@@ -2,15 +2,15 @@ import type { MenuItem } from "@/types/navigation"
 
 import {
   LayoutDashboard,
-  FileText,
-  MessageSquare,
-  Palette,
-  Plug,
-  Image,
-  Folder,
+  // FileText,
+  // MessageSquare,
+  // Palette,
+  // Plug,
+  // Image,
+  // Folder,
   Users,
-  UserCircle,
-  Settings,
+  // UserCircle,
+  // Settings,
 } from "lucide-react"
 
 export const SIDEBAR_ITEMS: MenuItem[] = [
@@ -20,7 +20,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     icon: LayoutDashboard,
     requiredPage: "dashboard",
   },
-  {
+  /*{
     item: "Posts",
     path: "/posts",
     icon: FileText,
@@ -101,7 +101,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     path: "/plugins",
     icon: Plug,
     requiredPage: "plugins",
-  },
+  },*/
   {
     item: "Users",
     path: "/users",
@@ -120,7 +120,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
       },
     ],
   },
-  {
+  /*{
     item: "Profile",
     path: "/profile",
     icon: UserCircle,
@@ -174,5 +174,5 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     path: "/sections",
     icon: Folder,
     requiredPage: "sections",
-  },
+  },*/
 ]

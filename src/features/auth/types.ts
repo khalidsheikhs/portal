@@ -1,3 +1,4 @@
+import type { BaseUser } from "@/types/user"
 import { UserRole } from "@/features/access"
 
 export type LoginRequest = {
@@ -12,11 +13,8 @@ export type LoginResponse = {
   csrf_nonce: string
 }
 
-export type User = {
-  id: number
+export type User = BaseUser & {
   username: string
-  name: string
-  email: string
   roles: UserRole[]
   capabilities: Record<string, boolean>
 }

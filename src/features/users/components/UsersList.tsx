@@ -1,19 +1,13 @@
-import { Button } from "@/components/index"
-import useUsers from "../hooks"
-import { useSelectedUser } from "../stores"
-import type { User } from "../types"
+import { useNavigate } from "react-router-dom"
+import useAppQuery from "@/hooks/useAppQuery"
+import { usersQueryOptions } from "../queries/usersQueryOptions"
 import { useCan, PERMISSIONS } from "@/features/permissions"
+import { Button } from "@/components/index"
 
 function UsersList() {
-  const { users, loading, error } = useUsers()
-  const selectedUser = useSelectedUser((state) => state.user)
+  const navigate = useNavigate()
+  const { data: users, loading, error } = useAppQuery(usersQueryOptions)
   const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
-  const selectUser = useSelectedUser((state) => state.selectUser)
-
-  const editUser = async (user: User) => {
-    selectUser(user)
-    console.log("Edit user:", selectedUser)
-  }
 
   if (loading) {
     return <p>Loading users...</p>
@@ -38,11 +32,11 @@ function UsersList() {
       </thead>
       <tbody>
           {users.map((user) => (
-          <tr key={user.id} className={user.id === selectedUser?.id ? 'active' : '' }>
+          <tr key={user.id}>
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>
-              <Button disabled={!canEditUser} onClick={() => editUser(user)}>
+              <Button disabled={!canEditUser} onClick={() => navigate(`/users/update/${user.id}`)}>
                 Update
               </Button>
             </td>

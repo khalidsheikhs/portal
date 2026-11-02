@@ -1,12 +1,11 @@
 import { Navigate, Outlet, type RouteObject } from "react-router-dom"
-
 import PublicRoute from "./PublicRoute"
 import ProtectedRoute from "./ProtectedRoute"
 import AuthLayout from "@/layouts/Auth"
 import AdminLayout from "@/layouts/Admin"
 import { RoleBasedRoute } from "@/features/access"
 import { RouteLoader } from "@/components"
-import { usersLoader } from "@/features/users"
+import { usersLoader, userLoader } from "@/features/users/loaders"
 // import Dashboard from "@/pages/Dashboard" // Import when load wihtout router lazyloading
 
 import { lazyRoute } from "./routerHelpers"
@@ -71,7 +70,20 @@ export const routes: RouteObject[] = [
                     path: "/users",
                     loader: usersLoader,
                     lazy: lazyRoute(
-                      () => import("@/pages/Users")
+                      () => import("@/pages/users/Users")
+                    ),
+                  },
+                  {
+                    path: "/users/add",
+                    lazy: lazyRoute(
+                      () => import("@/pages/users/AddUser")
+                    ),
+                  },
+                  {
+                    path: "/users/update/:id",
+                    loader: userLoader,
+                    lazy: lazyRoute(
+                      () => import("@/pages/users/UpdateUser")
                     ),
                   },
                 ],

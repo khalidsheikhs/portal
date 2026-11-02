@@ -1,11 +1,11 @@
-import { getUser } from "./getUser"
+import { getUserInfo } from "./getUserInfo"
 import { csrfNonceSession } from "./csrfNonceSession"
 
 export const validateToken = async (): Promise<boolean> => {
   if (!csrfNonceSession.get()) return false
 
   try {
-    await getUser()
+    await getUserInfo()
     return true
   } catch (error) {
     if (

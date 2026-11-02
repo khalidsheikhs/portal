@@ -1,7 +1,7 @@
 import type { User } from "../types"
 import { apiClient } from "@/lib/apiClient"
 
-export const getUser = async (): Promise<User> => {
+export const getUserInfo = async (): Promise<User> => {
   const {
     id,
     username,

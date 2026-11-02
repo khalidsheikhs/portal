@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import useAppQuery from "@/hooks/useAppQuery"
 import { usersQueryOptions } from "../queries/usersQueryOptions"
 import { useCan, PERMISSIONS } from "@/features/permissions"
-import { Button } from "@/components/index"
+import { Button, Table } from "@/components"
 
 function UsersList() {
   const navigate = useNavigate()
@@ -22,28 +22,21 @@ function UsersList() {
   }
 
   return (
-    <table width="100%">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-          {users.map((user) => (
-          <tr key={user.id}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-            <td>
-              <Button disabled={!canEditUser} onClick={() => navigate(`/users/update/${user.id}`)}>
-                Update
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <Table
+      data={users}
+      keys={["name", "url", "description"]}
+      renderActions={(user) => (
+        <div className="flex items-center gap-2">
+          <Button
+            disabled={!canEditUser}
+            onClick={() => navigate(`/users/update/${user.id}`)}
+            className="px-3 py-1"
+          >
+            Update
+          </Button>
+        </div>
+      )}
+    />
   )
 }
 

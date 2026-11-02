@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import MenuItem from "@/components/ui/MenuItem"
+import { MenuItem } from "@/components"
 import { SIDEBAR_ITEMS } from "@/config/navigation"
 import type { BaseMenuItem } from "@/types/navigation"
 import { canAccessPage, UserRole } from "@/features/access"

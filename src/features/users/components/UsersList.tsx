@@ -1,12 +1,13 @@
 import { Button } from "@/components/index"
 import useUsers from "../hooks"
 import { useSelectedUser } from "../stores"
-import { useCan } from "@/features/permissions/hooks/useCan"
 import type { User } from "../types"
+import { useCan, PERMISSIONS } from "@/features/permissions"
 
 function UsersList() {
   const { users, loading, error } = useUsers()
   const selectedUser = useSelectedUser((state) => state.user)
+  const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
   const selectUser = useSelectedUser((state) => state.selectUser)
 
   const editUser = async (user: User) => {
@@ -41,7 +42,7 @@ function UsersList() {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>
-              <Button disabled={!useCan("edit_users")} onClick={() => editUser(user)}>
+              <Button disabled={!canEditUser} onClick={() => editUser(user)}>
                 Update
               </Button>
             </td>

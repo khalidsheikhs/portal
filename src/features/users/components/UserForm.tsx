@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { userSchema, type UserFormValues } from "../schemas"
 import type { User } from "../types"
-import { UserRole } from "@/features/access/roles"
+import { UserRole } from "@/features/access"
 import { Input, Button, FormError } from "@/components"
 
 type UserSubmitData = Omit<UserFormValues, "password"> & {

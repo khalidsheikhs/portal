@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { UserRole } from "@/features/access/roles"
+import { UserRole } from "@/features/access"
 
 const roleValues = Object.values(UserRole) as [
   UserRole,

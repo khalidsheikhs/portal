@@ -1,12 +1,27 @@
-import { getUserInfo } from "./getUserInfo"
+import { apiClient } from "@/lib/apiClient"
 import { csrfNonceSession } from "./csrfNonceSession"
 
+interface ValidateTokenResponse {
+  code: string
+  data?: {
+    status?: number
+  }
+}
+
 export const validateToken = async (): Promise<boolean> => {
-  if (!csrfNonceSession.get()) return false
+  const csrfNonce = csrfNonceSession.get()
+
+  if (!csrfNonce) {
+    return false
+  }
 
   try {
-    await getUserInfo()
-    return true
+    const response = await apiClient<ValidateTokenResponse>(
+      "/jwt-auth/v1/token/validate",
+      { method: "POST" }
+    )
+
+    return response.code === "jwt_auth_valid_token"
   } catch (error) {
     if (
       error instanceof Error &&

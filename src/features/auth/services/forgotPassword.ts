@@ -1,10 +1,10 @@
 import { apiClient } from "@/lib/apiClient"
-import type { ForgotPasswordResponse } from "../types"
+import type { PasswordResponse } from "../types"
 
 export const forgotPassword = async (
   credentials: { email: string }
-): Promise<ForgotPasswordResponse> => {
-  const response = await apiClient<ForgotPasswordResponse>(
+): Promise<PasswordResponse> => {
+  const response = await apiClient<PasswordResponse>(
     "/bdpwr/v1/reset-password",
     {
       method: "POST",

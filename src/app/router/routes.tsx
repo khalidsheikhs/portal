@@ -40,6 +40,12 @@ export const routes: RouteObject[] = [
                   () => import("@/pages/auth/ForgotPassword")
                 ),
               },
+              {
+                path: "/reset-password",
+                lazy: lazyRoute(
+                  () => import("@/pages/auth/ResetPassword")
+                ),
+              },
             ],
           },
         ],

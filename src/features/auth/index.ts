@@ -1,5 +1,6 @@
 export { default as LoginForm } from "./components/LoginForm"
 export { default as ForgotPasswordForm } from "./components/ForgotPasswordForm"
+export { default as ResetPasswordForm } from "./components/ResetPasswordForm"
 export { AuthInitializer } from "./AuthInitializer"
 export { useAuth } from "./stores/auth"
 export { useLogout } from "./hooks/useLogout"

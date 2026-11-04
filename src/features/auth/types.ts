@@ -19,7 +19,13 @@ export type User = BaseUser & {
   capabilities: Record<string, boolean>
 }
 
-export type ForgotPasswordResponse = {
+export type PasswordRequest ={
+  email: string
+  code: string
+  password: string
+}
+
+export type PasswordResponse = {
   data: {
     status: number
   }

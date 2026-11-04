@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient"
-import { csrfNonceSession } from "./csrfNonceSession"
+import { token } from "./token"
 
 export const logout = async (): Promise<void> => {
   try {
@@ -8,6 +8,6 @@ export const logout = async (): Promise<void> => {
       { method: "POST" }
     )
   } finally {
-    if (csrfNonceSession.get()) csrfNonceSession.clear()
+    if (token.get()) token.clear()
   }
 }

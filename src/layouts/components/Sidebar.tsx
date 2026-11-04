@@ -4,7 +4,7 @@ import { SIDEBAR_ITEMS } from "@/config/navigation"
 import type { BaseMenuItem } from "@/types/navigation"
 import { canAccessPage, UserRole } from "@/features/access"
 import { useShallow } from "zustand/react/shallow"
-import { useAuth } from "@/features/auth/stores"
+import { useAuth } from "@/features/auth"
 import { useSidebar } from "@/stores/sidebar"
 
 // Filter restricted items and their nested children.

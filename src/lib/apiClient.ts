@@ -1,5 +1,5 @@
 import { env } from "@/config/env"
-import { csrfNonceSession } from "@/features/auth/"
+import { token } from "@/features/auth/"
 
 export async function apiClient<T>(
   endpoint: string,
@@ -8,10 +8,10 @@ export async function apiClient<T>(
   const headers = new Headers(options.headers)
   headers.set("Content-Type", "application/json")
 
-  const csrfNonce = csrfNonceSession.get()
+  const token_ = token.get()
 
-  if (csrfNonce) {
-    headers.set("X-WP-Nonce", csrfNonce)
+  if (token_) {
+    headers.set("X-WP-Nonce", token_)
   }
 
   const response = await fetch(

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { getUserInfo } from "./services/getUserInfo"
-import { csrfNonceSession } from "./services/csrfNonceSession"
-import { useAuth } from "./stores"
+import { token } from "./services/token"
+import { useAuth } from "./stores/auth"
 
 export function AuthInitializer() {
   const setAuth = useAuth((state) => state.setAuth)
@@ -11,9 +11,9 @@ export function AuthInitializer() {
     let cancelled = false
 
     const initializeAuth = async () => {
-      const csrfNonce = csrfNonceSession.get()
+      const token_ = token.get()
 
-      if (!csrfNonce) {
+      if (!token_) {
         unsetAuth()
         return
       }
@@ -23,7 +23,7 @@ export function AuthInitializer() {
         if (!cancelled) setAuth(user)
       } catch {
         if (!cancelled) {
-          if (csrfNonceSession.get()) csrfNonceSession.clear()
+          token.clear()
           unsetAuth()
         }
       }

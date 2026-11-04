@@ -2,8 +2,8 @@ import { useMutation } from "@tanstack/react-query"
 import type { LoginRequest } from "../types"
 import { login } from "../services/login"
 import { getUserInfo } from "../services/getUserInfo"
-import { csrfNonceSession } from "../services/csrfNonceSession"
-import { useAuth } from "../stores"
+import { token } from "../services/token"
+import { useAuth } from "../stores/auth"
 
 export function useLogin() {
   const setAuth = useAuth((state) => state.setAuth)
@@ -15,7 +15,7 @@ export function useLogin() {
       try {
         return await getUserInfo()
       } catch (error) {
-        if (csrfNonceSession.get()) csrfNonceSession.clear()
+        if (token.get()) token.clear()
         throw error
       }
     },

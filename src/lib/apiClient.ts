@@ -1,5 +1,5 @@
 import { env } from "@/config/env"
-import { token } from "@/features/auth/"
+import { useToken } from "@/features/auth/"
 
 export async function apiClient<T>(
   endpoint: string,
@@ -8,10 +8,10 @@ export async function apiClient<T>(
   const headers = new Headers(options.headers)
   headers.set("Content-Type", "application/json")
 
-  const token_ = token.get()
+  const token = useToken.getState().get()
 
-  if (token_) {
-    headers.set("X-WP-Nonce", token_)
+  if (token) {
+    headers.set("X-WP-Nonce", token)
   }
 
   const response = await fetch(

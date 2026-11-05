@@ -1,19 +1,19 @@
 import { useEffect } from "react"
 import { getUserInfo } from "./services/getUserInfo"
-import { token } from "./services/token"
+import { useToken } from "./stores/token"
 import { useAuth } from "./stores/auth"
 
 export function AuthInitializer() {
   const setAuth = useAuth((state) => state.setAuth)
   const unsetAuth = useAuth((state) => state.unsetAuth)
+  const token = useToken((state) => state.token)
+  const clearToken = useToken((state) => state.clear)
 
   useEffect(() => {
     let cancelled = false
 
     const initializeAuth = async () => {
-      const token_ = token.get()
-
-      if (!token_) {
+      if (!token) {
         unsetAuth()
         return
       }
@@ -23,7 +23,7 @@ export function AuthInitializer() {
         if (!cancelled) setAuth(user)
       } catch {
         if (!cancelled) {
-          token.clear()
+          clearToken()
           unsetAuth()
         }
       }

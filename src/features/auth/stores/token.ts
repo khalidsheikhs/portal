@@ -1,13 +1,24 @@
 import { create } from "zustand"
 
-type tokenStore = {
+type TokenStore = {
   token: string | null
-  setToken: (nonce: string | null) => void
-  clearToken: () => void
+  get: () => string | null
+  set: (nonce: string) => void
+  clear: () => void
 }
 
-export const useToken = create<tokenStore>((set) => ({
-  token: null,
-  setToken: (nonce: string | null) => set({ token: nonce }),
-  clearToken: () => set({ token: null }),
+export const useToken = create<TokenStore>((set, get) => ({
+  token: sessionStorage.getItem("token"),
+
+  get: () => get().token,
+
+  set: (nonce) => {
+    sessionStorage.setItem("token", nonce)
+    set({ token: nonce })
+  },
+
+  clear: () => {
+    sessionStorage.removeItem("token")
+    set({ token: null })
+  },
 }))

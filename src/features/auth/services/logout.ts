@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient"
-import { token } from "./token"
+import { useToken } from "../stores/token"
 
 export const logout = async (): Promise<void> => {
   try {
@@ -8,6 +8,6 @@ export const logout = async (): Promise<void> => {
       { method: "POST" }
     )
   } finally {
-    if (token.get()) token.clear()
+    useToken.getState().clear()
   }
 }

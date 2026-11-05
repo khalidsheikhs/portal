@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { resetPasswordSchema, type ResetPasswordFormValues } from "../schemas/resetPassword.schema"
@@ -15,7 +16,7 @@ function ResetPasswordForm() {
   } = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: "",
+      email: sessionStorage.getItem("resetEmail") ?? "",
       code: "",
       password: "",
       confirmPassword: "",
@@ -23,6 +24,8 @@ function ResetPasswordForm() {
   })
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  const navigate = useNavigate()
 
   const onSubmit = async (data: ResetPasswordFormValues) => {
     setSuccessMessage("")
@@ -36,15 +39,24 @@ function ResetPasswordForm() {
 
       if (response.data.status === 200) {
         setSuccessMessage(response.message)
+        sessionStorage.removeItem("resetEmail")
         reset()
+
+        setTimeout(() => {
+          navigate("/login")
+        }, 5000)
       }
     } catch (error) {
-      setError("root.server", {
-        message:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong",
-      })
+      const message =
+        error instanceof Error ? error.message : "Something went wrong"
+
+      setError("root.server", { message })
+
+      if (message.includes("maximum number of attempts allowed")) {
+        setTimeout(() => {
+          navigate("/forgot-password")
+        }, 3000)
+      }
     }
   }
 

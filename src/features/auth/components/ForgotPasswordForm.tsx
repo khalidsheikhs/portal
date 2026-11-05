@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from "../schemas/forgotPassword.schema"
@@ -18,7 +19,10 @@ function ForgotPasswordForm() {
       email: "",
     },
   })
+
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  const navigate = useNavigate()
 
   const onSubmit = async (data: ForgotPasswordFormValues) => {
     setSuccessMessage("")
@@ -28,7 +32,12 @@ function ForgotPasswordForm() {
 
       if (response.data.status === 200) {
         setSuccessMessage(response.message)
+        sessionStorage.setItem("resetEmail", data.email)
         resetField("email")
+
+        setTimeout(() => {
+          navigate("/reset-password")
+        }, 3000)
       }
     } catch (error) {
       setError("root.server", {

@@ -1,13 +1,20 @@
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 import useAppQuery from "@/hooks/useAppQuery"
 import { usersQueryOptions } from "../queries/usersQueryOptions"
-import { useCan, PERMISSIONS } from "@/features/permissions"
-import { Button, Table } from "@/components"
+// import { useCan, PERMISSIONS } from "@/features/permissions"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components"
 
 function UsersList() {
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
   const { data: users, loading, error } = useAppQuery(usersQueryOptions)
-  const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
+  // const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
 
   if (loading) {
     return <p>Loading users...</p>
@@ -22,21 +29,26 @@ function UsersList() {
   }
 
   return (
-    <Table
-      data={users}
-      keys={["name", "url", "description"]}
-      renderActions={(user) => (
-        <div className="flex items-center gap-2">
-          <Button
-            disabled={!canEditUser}
-            onClick={() => navigate(`/users/update/${user.id}`)}
-            className="px-3 py-1"
-          >
-            Update
-          </Button>
-        </div>
-      )}
-    />
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Name</TableHead>
+          <TableHead>Description</TableHead>
+          <TableHead>Roles</TableHead>
+          <TableHead className="text-right">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {users.map((user) => (
+          <TableRow key={user.id}>
+            <TableCell className="font-medium">{user.name}</TableCell>
+            <TableCell>{user.description}</TableCell>
+            <TableCell></TableCell>
+            <TableCell className="text-right"></TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   )
 }
 

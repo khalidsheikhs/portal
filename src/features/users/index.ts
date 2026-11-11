@@ -1,6 +1,8 @@
 export { default as UsersList } from "./components/UsersList"
 export { default as UserForm } from "./components/UserForm"
 export { default as SelectedUser } from "./components/SelectedUser"
+export { usersColumns } from "./config/usersColumns"
 export { userQueryOptions } from "./queries/userQueryOptions"
 export { usersQueryOptions } from "./queries/usersQueryOptions"
 export { type User } from "./types"
+export { usePagination } from "./stores"

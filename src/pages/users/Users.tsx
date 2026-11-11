@@ -1,80 +1,62 @@
 import { useSearchParams } from "react-router-dom"
 import useAppQuery from "@/hooks/useAppQuery"
-import { usersQueryOptions, UsersList, type User } from "@/features/users"
-import { Pagination, type TableColumn } from "@/components"
+import { usersQueryOptions, UsersList, usersColumns, usePagination } from "@/features/users"
+import { Pagination } from "@/components"
 import { getPagination } from "@/utils"
-import {  } from "@/components"
-
-const userColumns: TableColumn<User>[] = [
-  {
-    id: "avatar",
-    header: "Avatar",
-    cell: (user: User) => user.avatar_urls?.["48"] && (
-      <img src={user.avatar_urls["48"]} alt={user.name} className="h-10 w-10 rounded-full object-cover" />
-    )
-  },
-  {
-    id: "name",
-    header: "Name",
-    cell: (user: User) => (
-      <a href={user.link} target="_blank" rel="noopener noreferrer">
-        {user.name}
-      </a>
-    )
-  },
-  {
-    id: "email",
-    header: "Email",
-    cell: (user: User) => user.email
-  },
-  {
-    id: "roles",
-    header: "Roles",
-    cell: (user: User) => user.roles && user.roles.join(", ")
-  },
-]
 
 function Users() {
-  const [ searchParams, setSearchParams ] = useSearchParams()
+  const pageSize = usePagination((state) => state.pageSize)
 
-  const { pageNumber, PageSize } = getPagination(searchParams)
+  const setPageSize = usePagination((state) => state.setPageSize)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const { pageNumber } = getPagination(searchParams)
 
   const { data, loading, error } = useAppQuery(
-    usersQueryOptions({ page: pageNumber, size: PageSize })
+    usersQueryOptions({ page: pageNumber, size: pageSize })
   )
 
-  const handlePageChange = ({
-    pageNumber,
-    pageSize,
-  }: {
-    pageNumber: number
-    pageSize?: number
-  }) => {
-    setSearchParams({
-      ...(pageNumber !== 1 && { page: String(pageNumber) }),
-      ...(pageSize !== undefined && { size: String(pageSize) }),
+  const handlePageChange = (nextPage: number) =>
+    setSearchParams((currentParams) => {
+      const params = new URLSearchParams(currentParams)
+
+      if (nextPage === 1)
+        params.delete("page")
+      else
+        params.set("page", String(nextPage))
+
+      return params
     })
-  }
 
   return (
     <>
       <h2>Users Page</h2>
 
-      {data && <UsersList
-        rows={data.users}
-        columns={userColumns}
+<select
+  value={pageSize}
+  onChange={(e) => setPageSize(Number(e.target.value))}
+  className="border rounded-md px-3 py-2"
+>
+  <option value={10}>10</option>
+  <option value={20}>20</option>
+  <option value={30}>30</option>
+</select>
+
+      <UsersList
+        rows={data?.users ?? []}
+        columns={usersColumns}
         loading={loading}
         error={error}
-      />}
+        showActions
+      />
 
-      <Pagination
+      {data && data.totalPages > 1 && (<Pagination
         path="users"
         pageNumber={pageNumber}
-        pageSize={PageSize}
-        totalPages={data?.totalPages}
-        onPageChange={handlePageChange}
-        // setPage={(num)=> searchParams.set("page", num)}
-      />
+        totalPages={data.totalPages}
+        onPageChange={handlePageChange} // Removing onPageChange prop will make the page load on every page change by the pagination
+      />)}
 
       {/* <SelectedUser /> */}
 

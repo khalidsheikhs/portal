@@ -4,6 +4,7 @@ import { usersQueryOptions } from "./queries/usersQueryOptions"
 import { userQueryOptions } from "./queries/userQueryOptions"
 import { useAuth } from "@/features/auth"
 import { getPagination } from "@/utils"
+import { usePagination } from "./stores"
 
 export async function usersLoader({ request }: LoaderFunctionArgs) {
   const user = useAuth.getState().user
@@ -11,12 +12,14 @@ export async function usersLoader({ request }: LoaderFunctionArgs) {
   if (!user)
     return null
 
-  const { pageNumber, PageSize } = getPagination(
+  const { pageNumber } = getPagination(
     new URL(request.url).searchParams
   )
 
+  const pageSize = usePagination.getState().pageSize || 10
+
   await queryClient.query({
-    ...usersQueryOptions({ page: pageNumber, size: PageSize }),
+    ...usersQueryOptions({ page: pageNumber, size: pageSize }),
     staleTime: 1000 * 60 * 5,
   })
 

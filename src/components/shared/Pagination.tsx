@@ -11,18 +11,13 @@ import {
 function Pagination({
   path,
   pageNumber,
-  pageSize,
-  totalPages = 1,
+  totalPages,
   onPageChange,
 }: {
-  path: string
+  path?: string
   pageNumber: number
-  pageSize: number
-  totalPages?: number
-  onPageChange: (params: {
-    pageNumber: number
-    pageSize?: number
-  }) => void
+  totalPages: number
+  onPageChange?: (pageNumber: number) => void
 }) {
   return (
     <ScnPagination>
@@ -30,19 +25,35 @@ function Pagination({
 
         <PaginationItem>
           <PaginationPrevious 
-            href={pageNumber > 1 ? `/${path}?page=1&records=${pageSize}` : undefined} 
+            href={
+              pageNumber > 1
+                ? `${path ? `/${path}` : ""}?page=${pageNumber - 1}`
+                : undefined
+            }
             aria-disabled={pageNumber <= 1} 
             tabIndex={pageNumber <= 1 ? -1 : undefined} 
             className={pageNumber <= 1 ? "pointer-events-none opacity-50" : undefined} 
-            onClick={(e) => (e.preventDefault(), pageNumber > 1 && onPageChange({ pageNumber: 1, ...(pageSize !== 10 && { pageSize }) }))}
+            // onClick={(e) => (e.preventDefault(), pageNumber > 1 && onPageChange(pageNumber - 1))}
+            {...(onPageChange && {
+              onClick: (e) => {
+                e.preventDefault()
+                if (pageNumber > 1) onPageChange(pageNumber - 1)
+              },
+            })}
           />
         </PaginationItem>
 
         {pageNumber > 1 && (
           <PaginationItem>
             <PaginationLink
-              href={`/${path}?page=${pageNumber-1}&records=${pageSize}`}
-              onClick={(e) => (e.preventDefault(), onPageChange({ pageNumber: pageNumber - 1, ...(pageSize !== 10 && { pageSize }) }))}
+              href={`${path ? `/${path}` : ""}?page=${pageNumber - 1}`}
+              // onClick={(e) => (e.preventDefault(), onPageChange(pageNumber - 1))}
+              {...(onPageChange && {
+                onClick: (e) => {
+                  e.preventDefault()
+                  onPageChange(pageNumber - 1)
+                },
+              })}
             >
               {pageNumber - 1}
             </PaginationLink>
@@ -58,8 +69,14 @@ function Pagination({
         {pageNumber < totalPages && (
           <PaginationItem>
             <PaginationLink
-              href={`/${path}?page=${pageNumber + 1}&records=${pageSize}`}
-              onClick={(e) => (e.preventDefault(), onPageChange({ pageNumber: pageNumber + 1, ...(pageSize !== 10 && { pageSize }) }))}
+              href={`${path ? `/${path}` : ""}?page=${pageNumber + 1}`}
+              // onClick={(e) => (e.preventDefault(), onPageChange(pageNumber + 1))}
+              {...(onPageChange && {
+                onClick: (e) => {
+                  e.preventDefault()
+                  onPageChange(pageNumber + 1)
+                },
+              })}
             >
               {pageNumber + 1}
             </PaginationLink>
@@ -72,11 +89,21 @@ function Pagination({
 
         <PaginationItem>
           <PaginationNext
-            href={pageNumber < totalPages ? `/${path}?page=${totalPages}&records=${pageSize}` : undefined}
+            href={
+              pageNumber < totalPages
+                ? `${path ? `/${path}` : ""}?page=${pageNumber + 1}`
+                : undefined
+            }
             aria-disabled={pageNumber >= totalPages}
             tabIndex={pageNumber >= totalPages ? -1 : undefined}
             className={pageNumber >= totalPages ? "pointer-events-none opacity-50" : undefined}
-            onClick={(e) => (e.preventDefault(), pageNumber < totalPages && onPageChange({ pageNumber: totalPages, ...(pageSize !== 10 && { pageSize }) }))}
+            // onClick={(e) => (e.preventDefault(), pageNumber < totalPages && onPageChange(pageNumber + 1))}
+            {...(onPageChange && {
+              onClick: (e) => {
+                e.preventDefault()
+                if (pageNumber < totalPages) onPageChange(pageNumber + 1)
+              },
+            })}
           />
         </PaginationItem>
 

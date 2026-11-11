@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom"
 import {
   Pagination as ScnPagination,
   PaginationContent,
@@ -12,13 +13,27 @@ function Pagination({
   path,
   pageNumber,
   totalPages,
-  onPageChange,
+  loadNewPage = false,
 }: {
   path?: string
   pageNumber: number
   totalPages: number
-  onPageChange?: (pageNumber: number) => void
+  loadNewPage?: boolean
 }) {
+  const [, setSearchParams] = useSearchParams()
+
+  const onPageChange = (nextPage: number) =>
+    setSearchParams((currentParams) => {
+      const params = new URLSearchParams(currentParams)
+
+      if (nextPage === 1)
+        params.delete("page")
+      else
+        params.set("page", String(nextPage))
+
+      return params
+    })
+
   return (
     <ScnPagination>
       <PaginationContent>
@@ -34,7 +49,7 @@ function Pagination({
             tabIndex={pageNumber <= 1 ? -1 : undefined} 
             className={pageNumber <= 1 ? "pointer-events-none opacity-50" : undefined} 
             // onClick={(e) => (e.preventDefault(), pageNumber > 1 && onPageChange(pageNumber - 1))}
-            {...(onPageChange && {
+            {...(!loadNewPage && {
               onClick: (e) => {
                 e.preventDefault()
                 if (pageNumber > 1) onPageChange(pageNumber - 1)
@@ -48,7 +63,7 @@ function Pagination({
             <PaginationLink
               href={`${path ? `/${path}` : ""}?page=${pageNumber - 1}`}
               // onClick={(e) => (e.preventDefault(), onPageChange(pageNumber - 1))}
-              {...(onPageChange && {
+              {...(!loadNewPage && {
                 onClick: (e) => {
                   e.preventDefault()
                   onPageChange(pageNumber - 1)
@@ -71,7 +86,7 @@ function Pagination({
             <PaginationLink
               href={`${path ? `/${path}` : ""}?page=${pageNumber + 1}`}
               // onClick={(e) => (e.preventDefault(), onPageChange(pageNumber + 1))}
-              {...(onPageChange && {
+              {...(!loadNewPage && {
                 onClick: (e) => {
                   e.preventDefault()
                   onPageChange(pageNumber + 1)
@@ -98,7 +113,7 @@ function Pagination({
             tabIndex={pageNumber >= totalPages ? -1 : undefined}
             className={pageNumber >= totalPages ? "pointer-events-none opacity-50" : undefined}
             // onClick={(e) => (e.preventDefault(), pageNumber < totalPages && onPageChange(pageNumber + 1))}
-            {...(onPageChange && {
+            {...(!loadNewPage && {
               onClick: (e) => {
                 e.preventDefault()
                 if (pageNumber < totalPages) onPageChange(pageNumber + 1)

@@ -1,18 +1,21 @@
+import { Link } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow"
 import { useSidebar } from "@/stores/sidebar"
 import { useAuth, useLogout } from "@/features/auth"
 
 function Header() {
   const {
-      user,
-      status,
-    } = useAuth(
-      useShallow((state) => ({
-        user: state.user,
-        status: state.status,
-      }))
-    )
+    user,
+    status,
+  } = useAuth(
+    useShallow((state) => ({
+      user: state.user,
+      status: state.status,
+    }))
+  )
+
   const showMobileMenu = useSidebar((state) => state.showMobileMenu)
+
   const { mutateAsync: logoutUser, isPending } = useLogout()
 
   const handleLogout = async () => {
@@ -35,9 +38,13 @@ function Header() {
         ☰
       </button>
 
-      <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
-        Header UI
-      </h2>
+      <div className="flex items-center gap-1">
+        <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
+          Portal
+        </h2>
+        <span>-</span>
+        <p>ReactJS CMS</p>
+      </div>
       <div className="relative">
         {status === "loading" ? (
           <span className="text-sm text-gray-500">Loading user...</span>
@@ -52,7 +59,7 @@ function Header() {
               </summary>
 
               <div className="absolute right-0 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
-                <button
+                {/* <button
                   type="button"
                   className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                   onClick={(event) => {
@@ -62,9 +69,20 @@ function Header() {
                   }}
                 >
                   Settings
-                </button>
+                </button> */}
+                <Link
+                  to={`./users/update/${user.id}`}
+                  className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={(event) => {
+                    event.currentTarget
+                      .closest("details")
+                      ?.removeAttribute("open")
+                  }}
+                >
+                  Settings
+                </Link>
 
-                <div className="my-1 border-t border-gray-100" />
+                <hr className="my-1 border-t border-gray-100" />
 
                 <button
                   type="button"

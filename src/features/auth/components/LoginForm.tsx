@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, type LoginFormValues } from "../schemas/login.schema"
-import { Input, Button, FormError } from "@/components"
+import { Input, Button, ErrorMessage } from "@/components"
 import { useLogin } from "../hooks/useLogin"
 // import { useNavigate } from "react-router-dom"
 
@@ -59,7 +59,7 @@ function LoginForm() {
         />
 
         <div id="email-error">
-          <FormError message={errors.username?.message} />
+          <ErrorMessage message={errors.username?.message} />
         </div>
       </div>
 
@@ -85,7 +85,7 @@ function LoginForm() {
         />
 
         <div id="password-error">
-          <FormError message={errors.password?.message} />
+          <ErrorMessage message={errors.password?.message} />
         </div>
       </div>
 
@@ -97,7 +97,7 @@ function LoginForm() {
         {(isSubmitting || isPending) ? "Signing in..." : "Sign in"}
       </Button>
       {errors.root?.server?.message && (
-        <FormError message={errors.root.server.message} />
+        <ErrorMessage message={errors.root.server.message} />
       )}
     </form>
   )

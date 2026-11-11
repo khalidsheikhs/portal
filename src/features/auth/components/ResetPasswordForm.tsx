@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { resetPasswordSchema, type ResetPasswordFormValues } from "../schemas/resetPassword.schema"
-import { Input, Button, FormError } from "@/components"
+import { Input, Button, ErrorMessage } from "@/components"
 import { resetPassword } from "../services/resetPassword"
 
 function ResetPasswordForm() {
@@ -83,7 +83,7 @@ function ResetPasswordForm() {
         />
 
         <div id="email-error">
-          <FormError message={errors.email?.message} />
+          <ErrorMessage message={errors.email?.message} />
         </div>
       </div>
 
@@ -108,7 +108,7 @@ function ResetPasswordForm() {
         />
 
         <div id="code-error">
-          <FormError message={errors.code?.message} />
+          <ErrorMessage message={errors.code?.message} />
         </div>
       </div>
 
@@ -133,7 +133,7 @@ function ResetPasswordForm() {
         />
 
         <div id="password-error">
-          <FormError message={errors.password?.message} />
+          <ErrorMessage message={errors.password?.message} />
         </div>
       </div>
 
@@ -160,7 +160,7 @@ function ResetPasswordForm() {
         />
 
         <div id="confirm-password-error">
-          <FormError message={errors.confirmPassword?.message} />
+          <ErrorMessage message={errors.confirmPassword?.message} />
         </div>
       </div>
 
@@ -174,7 +174,7 @@ function ResetPasswordForm() {
       </Button>
 
       {errors.root?.server?.message && (
-        <FormError message={errors.root.server.message} />
+        <ErrorMessage message={errors.root.server.message} />
       )}
 
       {successMessage && (

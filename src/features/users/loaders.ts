@@ -1,18 +1,22 @@
 import type { LoaderFunctionArgs } from "react-router-dom"
-import { useAuth } from "@/features/auth"
 import { queryClient } from "@/app/providers/QueryProvider"
 import { usersQueryOptions } from "./queries/usersQueryOptions"
 import { userQueryOptions } from "./queries/userQueryOptions"
+import { useAuth } from "@/features/auth"
+import { getPagination } from "@/utils"
 
-export async function usersLoader(_args: LoaderFunctionArgs) {
+export async function usersLoader({ request }: LoaderFunctionArgs) {
   const user = useAuth.getState().user
 
-  if (!user) {
+  if (!user)
     return null
-  }
+
+  const { pageNumber, PageSize } = getPagination(
+    new URL(request.url).searchParams
+  )
 
   await queryClient.query({
-    ...usersQueryOptions,
+    ...usersQueryOptions({ page: pageNumber, size: PageSize }),
     staleTime: 1000 * 60 * 5,
   })
 
@@ -22,15 +26,13 @@ export async function usersLoader(_args: LoaderFunctionArgs) {
 export async function userLoader({ params }: LoaderFunctionArgs) {
   const user = useAuth.getState().user
 
-  if (!user) {
+  if (!user)
     return null
-  }
 
   const id = Number(params.id)
 
-  if (!Number.isInteger(id) || id <= 0) {
+  if (!Number.isInteger(id) || id <= 0)
     throw new Response("Invalid user ID", { status: 400 })
-  }
 
   return queryClient.query({
     ...userQueryOptions(id),

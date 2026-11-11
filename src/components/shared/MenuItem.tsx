@@ -16,7 +16,7 @@ function MenuItem({
   const [isOpen, setIsOpen] = useState(false)
   const hasChildren = Boolean(children?.length)
 
-  if (!hasChildren) {
+  if (!hasChildren)
     return (
       <NavLink
         to={path}
@@ -39,7 +39,6 @@ function MenuItem({
         </div>
       </NavLink>
     )
-  }
 
   return (
     <div className="relative">

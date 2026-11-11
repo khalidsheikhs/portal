@@ -1,54 +1,64 @@
-// import { useNavigate } from "react-router-dom"
-import useAppQuery from "@/hooks/useAppQuery"
-import { usersQueryOptions } from "../queries/usersQueryOptions"
-// import { useCan, PERMISSIONS } from "@/features/permissions"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components"
+import { Link } from "react-router-dom"
+import { Pencil, Trash2 } from "lucide-react"
+import { useCan, PERMISSIONS } from "@/features/permissions"
+import { DataTable, type TableColumn } from "@/components"
+import type { User } from "../types"
 
-function UsersList() {
-  //const navigate = useNavigate()
-  const { data: users, loading, error } = useAppQuery(usersQueryOptions)
-  // const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
+function UsersList({
+  rows,
+  columns,
+  loading,
+  error,
+}: {
+  rows: User[]
+  columns: TableColumn<User>[]
+  loading: boolean
+  error: Error | null
+}) {
+  const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
 
-  if (loading) {
+  if (loading)
     return <p>Loading users...</p>
-  }
 
-  if (error) {
+  if (error)
     return <p>Error: {error.message}</p>
-  }
 
-  if (!users?.length) {
-    return <p>No users found.</p>
-  }
+  const handleDelete = (id: User["id"]): void =>
+    console.log(`Delete user ${id}`)
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Name</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Roles</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell className="font-medium">{user.name}</TableCell>
-            <TableCell>{user.description}</TableCell>
-            <TableCell></TableCell>
-            <TableCell className="text-right"></TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <DataTable
+      columns={columns}
+      rows={rows}
+      getRowId={(user) => user.id}
+      isLoading={loading}
+      emptyMessage="No users found."
+      actions={(user) => (
+        <div className="flex justify-end gap-3">
+          <Link
+            to={`/users/update/${user.id}`}
+            className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
+            aria-disabled={!canEditUser}
+            onClick={(e) => !canEditUser && e.preventDefault()}
+            title="Edit user"
+          >
+            <Pencil size={16} />
+            {/* Edit */}
+          </Link>
+
+          <button
+            type="button"
+            disabled={!canEditUser}
+            onClick={() => handleDelete(user.id)}
+            className="flex items-center gap-1 text-sm text-red-600 hover:text-red-800 disabled:opacity-50"
+            title="Remove user"
+          >
+            <Trash2 size={16} />
+            {/* Delete */}
+          </button>
+        </div>
+      )}
+    />
   )
 }
 

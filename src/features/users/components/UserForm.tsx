@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { userSchema, type UserFormValues } from "../schemas"
 import type { User } from "../types"
 import { UserRole } from "@/features/access"
-import { Input, Button, FormError } from "@/components"
+import { Input, Button, ErrorMessage } from "@/components"
 
 type UserSubmitData = Omit<UserFormValues, "password"> & {
   name: string
@@ -138,7 +138,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
         />
 
         <div id="username-error">
-          <FormError message={errors.username?.message} />
+          <ErrorMessage message={errors.username?.message} />
         </div>
       </div>
 
@@ -160,7 +160,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
           className="px-4 py-3"
         />
 
-        <FormError message={errors.first_name?.message} />
+        <ErrorMessage message={errors.first_name?.message} />
       </div>
 
       {/* Last Name */}
@@ -181,7 +181,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
           className="px-4 py-3"
         />
 
-        <FormError message={errors.last_name?.message} />
+        <ErrorMessage message={errors.last_name?.message} />
       </div>
 
       {/* Nickname */}
@@ -204,7 +204,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
         />
 
         <div id="nickname-error">
-          <FormError message={errors.nickname?.message} />
+          <ErrorMessage message={errors.nickname?.message} />
         </div>
       </div>
 
@@ -229,7 +229,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
         />
 
         <div id="email-error">
-          <FormError message={errors.email?.message} />
+          <ErrorMessage message={errors.email?.message} />
         </div>
       </div>
 
@@ -251,7 +251,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
           className="px-4 py-3"
         />
 
-        <FormError message={errors.url?.message} />
+        <ErrorMessage message={errors.url?.message} />
       </div>
 
       {/* Biographical Info */}
@@ -272,7 +272,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
           className="w-full rounded-md border border-slate-300 px-4 py-3 text-sm"
         />
 
-        <FormError message={errors.description?.message} />
+        <ErrorMessage message={errors.description?.message} />
       </div>
 
       {/* Roles */}
@@ -302,7 +302,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
           Hold Ctrl (Windows) or Command (Mac) to select multiple roles.
         </p>
 
-        <FormError message={errors.roles?.message} />
+        <ErrorMessage message={errors.roles?.message} />
       </div>
 
       {/* Password */}
@@ -330,7 +330,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
         />
 
         <div id="password-error">
-          <FormError message={errors.password?.message} />
+          <ErrorMessage message={errors.password?.message} />
         </div>
       </div>
 
@@ -358,7 +358,7 @@ function UserForm({ user, onSubmit }: UserFormProps) {
       </div>
 
       {errors.root?.server?.message && (
-        <FormError message={errors.root.server.message} />
+        <ErrorMessage message={errors.root.server.message} />
       )}
     </form>
   )

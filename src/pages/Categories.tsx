@@ -4,17 +4,14 @@ import { categoriesQueryOptions } from "@/features/categories/queries"
 function Categories() {
   const { data: categories, loading, error } = useAppQuery(categoriesQueryOptions)
 
-  if (loading) {
+  if (loading)
     return <p>Loading categories...</p>
-  }
 
-  if (error) {
+  if (error)
     return <p>Error: {error.message}</p>
-  }
 
-  if (!categories?.length) {
+  if (!categories?.length)
     return <p>No categories found.</p>
-  }
 
 return (
     <>

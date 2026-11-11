@@ -4,13 +4,11 @@ import { useAuth } from "@/features/auth"
 function ProtectedRoute() {
   const status = useAuth((state) => state.status)
 
-  if (status === "loading") {
+  if (status === "loading")
     return null
-  }
 
-  if (status === "unauthenticated") {
+  if (status === "unauthenticated")
     return <Navigate to="/login" replace />
-  }
 
   return <Outlet />
 }

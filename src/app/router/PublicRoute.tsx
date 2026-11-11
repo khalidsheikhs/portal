@@ -4,13 +4,11 @@ import { useAuth } from "@/features/auth"
 function PublicRoute() {
   const status = useAuth((state) => state.status)
 
-  if (status === "loading") {
+  if (status === "loading")
     return null
-  }
 
-  if (status === "authenticated") {
+  if (status === "authenticated")
     return <Navigate to="/dashboard" replace />
-  }
 
   return <Outlet />
 }

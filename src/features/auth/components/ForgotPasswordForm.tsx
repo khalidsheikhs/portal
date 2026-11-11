@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from "../schemas/forgotPassword.schema"
-import { Input, Button, FormError } from "@/components"
+import { Input, Button, ErrorMessage } from "@/components"
 import { forgotPassword } from "../services/forgotPassword"
 
 function ForgotPasswordForm() {
@@ -72,7 +72,7 @@ function ForgotPasswordForm() {
         />
 
         <div id="email-error">
-          <FormError message={errors.email?.message} />
+          <ErrorMessage message={errors.email?.message} />
         </div>
       </div>
 
@@ -85,7 +85,7 @@ function ForgotPasswordForm() {
         {isSubmitting ? "Sending..." : "Send reset link"}
       </Button>
       {errors.root?.server?.message && (
-        <FormError message={errors.root.server.message} />
+        <ErrorMessage message={errors.root.server.message} />
       )}
       {successMessage && (
         <p className="mt-1 text-sm text-success" role="status">{successMessage}</p>

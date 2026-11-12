@@ -1,4 +1,3 @@
-
 import type { TableColumn } from "@/components"
 import type { User } from "../types"
 

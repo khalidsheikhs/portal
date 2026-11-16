@@ -9,18 +9,23 @@ function UsersList({
   columns,
   loading,
   error,
-  showActions = false,
 }: {
   rows: User[]
   columns: TableColumn<User>[]
   loading: boolean
   error: Error | null
-  showActions?: boolean
 }) {
   const canEditUser = useCan(PERMISSIONS.USERS.EDIT)
 
+  const canDeleteUser = useCan(PERMISSIONS.USERS.DELETE)
+
+  const showActions = canDeleteUser || canEditUser
+
   const handleDelete = (id: User["id"]): void => {
-    console.log(`Delete user ${id}`)
+    if (canDeleteUser)
+      console.log(`Delete user ${id}`)
+    else
+      console.log(`You can not to delete user ${id}`)
   }
 
   if (error)
@@ -37,27 +42,22 @@ function UsersList({
         showActions
         ? (user) => (
           <div className="flex justify-end gap-3">
-            <Link
+            {canEditUser && <Link
               to={`/users/update/${user.id}`}
               className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
-              aria-disabled={!canEditUser}
-              onClick={(e) => {
-                if (!canEditUser) e.preventDefault()
-              }}
               title="Edit user"
             >
               <Pencil size={16} />
-            </Link>
+            </Link>}
 
-            <button
+            {canDeleteUser && <button
               type="button"
-              disabled={!canEditUser}
               onClick={() => handleDelete(user.id)}
               className="flex items-center gap-1 text-sm text-red-600 hover:text-red-800 disabled:opacity-50"
               title="Remove user"
             >
               <Trash2 size={16} />
-            </button>
+            </button>}
           </div>
         )
         : undefined

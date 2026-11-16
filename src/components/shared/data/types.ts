@@ -19,4 +19,5 @@ export interface TableProps<T> {
   emptyMessage?: string
   className?: string
   showFooter?: boolean
+  virtualized?: boolean
 }

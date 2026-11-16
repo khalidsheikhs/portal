@@ -43,11 +43,9 @@ function Users() {
         columns={usersColumns}
         loading={loading}
         error={error}
-        showActions
       />
 
       {data && data.totalPages > 1 && (<Pagination
-        path="users"
         pageNumber={pageNumber}
         totalPages={data.totalPages}
       />)}

@@ -13,13 +13,19 @@ export function apiClient<T>(
   endpoint: string,
   options: RequestInit | undefined,
   returnResponse: true,
-): Promise<{ data: T; headers: Headers }>
+): Promise<{
+  data: T
+  headers: Headers
+}>
 
 export async function apiClient<T>(
   endpoint: string,
   options: RequestInit = {},
   returnResponse = false,
-): Promise<T | { data: T; headers: Headers }> {
+): Promise<T | {
+  data: T
+  headers: Headers
+}> {
   const headers = new Headers(options.headers)
 
   headers.set("Content-Type", "application/json")

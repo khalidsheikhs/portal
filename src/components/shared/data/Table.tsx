@@ -26,6 +26,7 @@ function Table<T>({
   className,
   showFooter = false,
   virtualized = rows.length > 20,
+  getRowClassName,
 }: TableProps<T>) {
   const parentRef = useRef<HTMLDivElement>(null)
 
@@ -50,7 +51,7 @@ function Table<T>({
     : 0
 
   const renderRow = (row: T) => (
-    <TableRow key={getRowId(row)}>
+    <TableRow key={getRowId(row)} className={getRowClassName?.(row)}>
       {columns.map((column) => (
         <TableCell
           key={column.id}

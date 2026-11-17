@@ -20,4 +20,5 @@ export interface TableProps<T> {
   className?: string
   showFooter?: boolean
   virtualized?: boolean
+  getRowClassName?: (row: T) => string
 }

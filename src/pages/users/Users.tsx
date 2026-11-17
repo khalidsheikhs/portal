@@ -1,10 +1,15 @@
+import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import useAppQuery from "@/hooks/useAppQuery"
-import { usersQueryOptions, UsersList, usersColumns, usePagination } from "@/features/users"
+import { usersQueryOptions, UsersList, usersColumns, usePagination, deleteUser } from "@/features/users"
 import { Pagination, Dropdown } from "@/components"
 import { getPagination } from "@/utils"
+import type { BaseUser as User } from "@/types/user"
 
 function Users() {
+  const [deletingUserId, setDeletingUserId] = useState<User["id"] | null>(null)
+
   const pageSize = usePagination((state) => state.pageSize)
 
   const setPageSize = usePagination((state) => state.setPageSize)
@@ -16,6 +21,34 @@ function Users() {
   const { data, loading, error } = useAppQuery(
     usersQueryOptions({ page: pageNumber, size: pageSize })
   )
+
+  const queryClient = useQueryClient()
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteUser,
+
+    onSuccess: (response) => {
+      if (response.deleted) {
+        queryClient.invalidateQueries({
+          queryKey: ["users"],
+        })
+
+        console.log(
+          `User ${response.previous.username} deleted successfully`
+        )
+      }
+    },
+  })
+
+  async function handleDelete(id: User["id"]) {
+    setDeletingUserId(id)
+
+    try {
+      await deleteMutation.mutateAsync(id)
+    } finally {
+      setDeletingUserId(null)
+    }
+  }
 
   return (
     <>
@@ -43,6 +76,9 @@ function Users() {
         columns={usersColumns}
         loading={loading}
         error={error}
+        handleDelete={handleDelete}
+        isDeleting={deleteMutation.isPending}
+        deletingUserId={deletingUserId}
       />
 
       {data && data.totalPages > 1 && (<Pagination

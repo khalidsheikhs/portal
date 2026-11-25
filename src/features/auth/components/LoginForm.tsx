@@ -19,13 +19,13 @@ function LoginForm() {
     },
   })
 
-  const { mutateAsync, isPending } = useLogin()
+  const { mutateAsync: loginUser, isPending } = useLogin()
   // const navigate = useNavigate()
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
       // const response = await login(data)
-      await mutateAsync(data)
+      await loginUser(data)
       // navigate("/dashboard")
     } catch (error) {
       setError("root.server", {
